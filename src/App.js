@@ -3,9 +3,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers as getUsersAction } from "./store/actions";
 
-// add ve update modal
-// delete button
-// filtre modal
+// TODO: asas
+// TODO: add ve update modal
+// TODO: delete button
+// TODO: filtre modal
+// TODO: card liste
 
 function App() {
   const dispatch = useDispatch();
