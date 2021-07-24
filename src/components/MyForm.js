@@ -39,8 +39,7 @@ function MyForm(props) {
           "Surname cannot contain special characters or spaces"
         ),
       phone: Yup.string()
-        .min(8, "Phone must be at least 8 characters")
-        .max(20, "Phone must be less then 20 characters")
+        .length(11, "Phone must be 11 digit")
         .required("Phone is required")
         .matches(/^\d+$/, "Phone can contain only numbers"),
     }),
@@ -48,7 +47,10 @@ function MyForm(props) {
 
   return (
     <FormikProvider value={formik}>
-      <Form style={{ display: "flex", flexDirection: "column" }}>
+      <Form
+        autoComplete="off"
+        style={{ display: "flex", flexDirection: "column" }}
+      >
         <MyInput
           label="Name"
           id="name"
