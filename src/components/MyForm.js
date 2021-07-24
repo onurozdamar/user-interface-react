@@ -20,8 +20,8 @@ function MyForm(props) {
       phone: user ? user.phone : "",
     },
     onSubmit: (values) => {
-      console.log(values);
       postUser({
+        id: user ? user.id : null,
         name: values.name,
         surname: values.surname,
         phone: values.phone,
