@@ -23,8 +23,8 @@ export const getUsers = () => (dispatch) => {
     );
 };
 
-export const postUser = (user) => (dispatch) => {
-  Backend.postUser(user)
+export const postUser = (user, id) => (dispatch) => {
+  Backend.postUser(user, id)
     .then((res) =>
       dispatch({
         type: POST_USER,

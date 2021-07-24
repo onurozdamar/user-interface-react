@@ -9,8 +9,8 @@ function MyForm(props) {
   const dispatch = useDispatch();
   const { user } = props;
 
-  function postUser(user) {
-    dispatch(postUserAction(user));
+  function postUser(user, id) {
+    dispatch(postUserAction(user, id));
   }
 
   const formik = useFormik({
@@ -20,11 +20,15 @@ function MyForm(props) {
       phone: user ? user.phone : "",
     },
     onSubmit: (values) => {
-      postUser({
-        name: values.name,
-        surname: values.surname,
-        phone: values.phone,
-      });
+      console.log(user.name);
+      postUser(
+        {
+          name: values.name,
+          surname: values.surname,
+          phone: values.phone,
+        },
+        user ? user.id : null
+      );
       props.closeModal();
     },
     validateOnChange: true,
