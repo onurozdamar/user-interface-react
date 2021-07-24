@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -7,6 +7,11 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import { Icon, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
+import Modal from "react-modal";
+import { Edit } from "@material-ui/icons";
+import MyForm from "./MyForm";
+
+Modal.setAppElement("#root");
 
 const useStyles = makeStyles({
   root: {
@@ -24,10 +29,38 @@ const useStyles = makeStyles({
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr",
   },
+  button: {
+    color: "rgb(240, 10, 10)",
+  },
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "row-reverse",
+  },
 });
+
+const customModalStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
 
 export default function MyCard(props) {
   const classes = useStyles();
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   const userInfo = ["Adı", "Soyadı", "Telefon"];
 
@@ -75,20 +108,28 @@ export default function MyCard(props) {
             </Grid>
           ))}
       </CardContent>
-      <CardActions>
-        <IconButton
-          aria-label="delete"
-          style={{
-            color: "rgb(240, 10, 10)",
-            position: "absolute",
-            padding: "10px",
-            bottom: "0",
-            right: "0",
-          }}
-        >
+      <CardActions className={classes.buttonContainer}>
+        <IconButton aria-label="delete" className={classes.button}>
           <DeleteIcon />
         </IconButton>
+
+        <IconButton
+          aria-label="update"
+          className={classes.button}
+          onClick={openModal}
+        >
+          <Edit />
+        </IconButton>
       </CardActions>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customModalStyles}
+        contentLabel="Example Modal"
+      >
+        <MyForm user={props.user}></MyForm>
+      </Modal>
     </Card>
   );
 }
