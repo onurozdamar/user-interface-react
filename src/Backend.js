@@ -7,9 +7,9 @@ export function getUsers() {
     .catch((error) => console.log(error));
 }
 
-export function postUser() {
+export function postUser(user) {
   return axios
-    .post("http://localhost:3000/users", {})
-    .then((response) => console.log(response))
+    .post("http://localhost:3000/users", user)
+    .then((response) => response.data)
     .catch((error) => console.log(error));
 }

@@ -15,6 +15,7 @@ const styles = {
     width: "75%",
     margin: "0 auto",
     display: "flex",
+    flexWrap: "wrap",
     flexDirection: "row",
     alignItems: "center",
     marginLeft: "10px",
@@ -26,6 +27,7 @@ function App() {
   const dispatch = useDispatch();
 
   const users = useSelector(({ cardReducer }) => cardReducer.users);
+  const loading = useSelector(({ cardReducer }) => cardReducer.loading);
 
   function getUsers() {
     dispatch(getUsersAction());
@@ -33,7 +35,7 @@ function App() {
 
   useEffect(() => {
     getUsers();
-  }, [users.length]);
+  }, [loading]);
 
   const [showModal, setShowModal] = useState(false);
 

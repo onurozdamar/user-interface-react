@@ -1,8 +1,10 @@
+import userEvent from "@testing-library/user-event";
 import * as Backend from "../../Backend";
 
 export const GET_USERS = "GET_USERS";
 export const GET_USERS_ERROR = "GET_USERS_ERROR";
 export const POST_USER = "POST_USER";
+export const POST_USER_ERROR = "POST_USER_ERROR";
 
 export const getUsers = () => (dispatch) => {
   Backend.getUsers()
@@ -20,10 +22,18 @@ export const getUsers = () => (dispatch) => {
     );
 };
 
-export function postUser(data) {
-  return (dispatch) =>
-    dispatch({
-      type: POST_USER,
-      payload: data,
-    });
-}
+export const postUser = (user) => (dispatch) => {
+  Backend.postUser(user)
+    .then((res) =>
+      dispatch({
+        type: POST_USER,
+        payload: res,
+      })
+    )
+    .catch((e) =>
+      dispatch({
+        type: POST_USER_ERROR,
+        payload: [],
+      })
+    );
+};

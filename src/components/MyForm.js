@@ -1,10 +1,17 @@
 import { Button } from "@material-ui/core";
 import { Form, FormikProvider, useFormik } from "formik";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
+import { postUser as postUserAction } from "../store/actions";
 import MyInput from "./MyInput";
 
 function MyForm(props) {
+  const dispatch = useDispatch();
   const { user } = props;
+
+  function postUser(user) {
+    dispatch(postUserAction(user));
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -14,11 +21,12 @@ function MyForm(props) {
     },
     onSubmit: (values) => {
       console.log(values);
-      props.click({
+      postUser({
         name: values.name,
         surname: values.surname,
         phone: values.phone,
       });
+      props.closeModal();
     },
     validateOnChange: true,
     validationSchema: Yup.object({
