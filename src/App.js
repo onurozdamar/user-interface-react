@@ -5,10 +5,8 @@ import { getUsers as getUsersAction } from "./store/actions";
 import { Button } from "@material-ui/core";
 import MyCardModal from "./components/MyCardModal";
 
-// TODO: add ve update modal
-// TODO: delete button
 // TODO: filtre modal
-// TODO: card liste
+// TODO: siralama modal
 
 const styles = {
   container: {
@@ -62,8 +60,8 @@ function App() {
       </div>
 
       <div style={styles.container}>
-        {users.map((user) => (
-          <MyCard key={user.id} user={user}></MyCard>
+        {users.map((user, index) => (
+          <MyCard key={index} user={user}></MyCard>
         ))}
       </div>
 
