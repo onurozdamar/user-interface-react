@@ -7,11 +7,8 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import { Icon, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Modal from "react-modal";
 import { Edit } from "@material-ui/icons";
-import MyForm from "./MyForm";
-
-Modal.setAppElement("#root");
+import MyCardModal from "./MyCardModal";
 
 const useStyles = makeStyles({
   root: {
@@ -38,31 +35,20 @@ const useStyles = makeStyles({
   },
 });
 
-const customModalStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
-
 export default function MyCard(props) {
   const classes = useStyles();
 
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const userInfo = ["Adı", "Soyadı", "Telefon"];
+
+  const [showModal, setShowModal] = useState(false);
 
   function openModal() {
-    setIsOpen(true);
+    setShowModal(true);
   }
 
   function closeModal() {
-    setIsOpen(false);
+    setShowModal(false);
   }
-
-  const userInfo = ["Adı", "Soyadı", "Telefon"];
 
   return (
     <Card className={classes.root}>
@@ -120,16 +106,13 @@ export default function MyCard(props) {
         >
           <Edit />
         </IconButton>
-      </CardActions>
 
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customModalStyles}
-        contentLabel="Example Modal"
-      >
-        <MyForm user={props.user}></MyForm>
-      </Modal>
+        <MyCardModal
+          showModal={showModal}
+          user={props.user}
+          closeModal={closeModal}
+        />
+      </CardActions>
     </Card>
   );
 }
