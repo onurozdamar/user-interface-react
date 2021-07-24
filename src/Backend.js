@@ -9,7 +9,7 @@ export function getUsers() {
 
 export function postUser(user, id) {
   return axios
-    .post("http://localhost:3000/users/" + id ?? "", user)
+    .post("http://localhost:3000/users" + (id ? "/" + id : ""), user)
     .then((response) => response.data)
     .catch((error) => console.log("post hatası", error));
 }
