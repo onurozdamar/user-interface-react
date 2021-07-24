@@ -21,7 +21,6 @@ function MyForm(props) {
     },
     onSubmit: (values) => {
       postUser({
-        id: user ? user.id : null,
         name: values.name,
         surname: values.surname,
         phone: values.phone,
