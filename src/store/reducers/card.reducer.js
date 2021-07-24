@@ -23,6 +23,16 @@ const cardReducer = function (state = initialState, action) {
       console.log("Kullanıcı eklerken hata!");
       return state;
 
+    case Actions.DELETE_USER:
+      state.users.splice(state.users.indexOf(action.payload));
+      console.log("payload", action);
+      console.log("sate", state);
+      return { ...state, loading: true };
+
+    case Actions.DELETE_USER_ERROR:
+      console.log("Kullanıcı silerken hata!");
+      return state;
+
     default:
       return state;
   }

@@ -9,6 +9,8 @@ import { Icon, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Edit } from "@material-ui/icons";
 import MyCardModal from "./MyCardModal";
+import { useDispatch } from "react-redux";
+import { deleteUser as deleteUserAction } from "../store/actions";
 
 const useStyles = makeStyles({
   root: {
@@ -41,6 +43,12 @@ export default function MyCard(props) {
   const userInfo = ["Adı", "Soyadı", "Telefon"];
 
   const [showModal, setShowModal] = useState(false);
+
+  const dispatch = useDispatch();
+
+  function deleteUser() {
+    dispatch(deleteUserAction(props.user));
+  }
 
   function openModal() {
     setShowModal(true);
@@ -95,7 +103,11 @@ export default function MyCard(props) {
           ))}
       </CardContent>
       <CardActions className={classes.buttonContainer}>
-        <IconButton aria-label="delete" className={classes.button}>
+        <IconButton
+          aria-label="delete"
+          className={classes.button}
+          onClick={deleteUser}
+        >
           <DeleteIcon />
         </IconButton>
 
