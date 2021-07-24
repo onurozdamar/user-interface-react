@@ -1,7 +1,7 @@
 import { Button } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { decrementCounter, incrementCounter } from "./store/actions";
+import { decrementCounter, incrementCounter } from "../store/actions";
 
 export default function Counter() {
   const dispatch = useDispatch();
