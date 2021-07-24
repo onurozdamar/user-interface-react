@@ -4,6 +4,8 @@ export const GET_USERS = "GET_USERS";
 export const GET_USERS_ERROR = "GET_USERS_ERROR";
 export const POST_USER = "POST_USER";
 export const POST_USER_ERROR = "POST_USER_ERROR";
+export const UPDATE_USER = "UPDATE_USER";
+export const UPDATE_USER_ERROR = "UPDATE_USER_ERROR";
 export const DELETE_USER = "DELETE_USER";
 export const DELETE_USER_ERROR = "DELETE_USER_ERROR";
 
@@ -23,8 +25,8 @@ export const getUsers = () => (dispatch) => {
     );
 };
 
-export const postUser = (user, id) => (dispatch) => {
-  Backend.postUser(user, id)
+export const postUser = (user) => (dispatch) => {
+  Backend.postUser(user)
     .then((res) =>
       dispatch({
         type: POST_USER,
@@ -34,6 +36,22 @@ export const postUser = (user, id) => (dispatch) => {
     .catch((e) =>
       dispatch({
         type: POST_USER_ERROR,
+        payload: [],
+      })
+    );
+};
+
+export const updateUser = (user, id) => (dispatch) => {
+  Backend.updateUser(user, id)
+    .then((res) =>
+      dispatch({
+        type: UPDATE_USER,
+        payload: res,
+      })
+    )
+    .catch((e) =>
+      dispatch({
+        type: UPDATE_USER_ERROR,
         payload: [],
       })
     );

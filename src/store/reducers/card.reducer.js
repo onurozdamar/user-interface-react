@@ -23,10 +23,17 @@ const cardReducer = function (state = initialState, action) {
       console.log("Kullanıcı eklerken hata!");
       return state;
 
+    case Actions.UPDATE_USER:
+      var user = state.users.find((user) => user.id === action.payload.id);
+      user = action.payload;
+      return { ...state, loading: true };
+
+    case Actions.UPDATE_USER_ERROR:
+      console.log("Kullanıcı güncellerken hata!");
+      return state;
+
     case Actions.DELETE_USER:
       state.users.splice(state.users.indexOf(action.payload));
-      console.log("payload", action);
-      console.log("sate", state);
       return { ...state, loading: true };
 
     case Actions.DELETE_USER_ERROR:

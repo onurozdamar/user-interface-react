@@ -2,15 +2,22 @@ import { Button } from "@material-ui/core";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import { postUser as postUserAction } from "../store/actions";
+import {
+  postUser as postUserAction,
+  updateUser as updateUserAction,
+} from "../store/actions";
 import MyInput from "./MyInput";
 
 function MyForm(props) {
   const dispatch = useDispatch();
   const { user } = props;
 
-  function postUser(user, id) {
-    dispatch(postUserAction(user, id));
+  function postUser(user) {
+    dispatch(postUserAction(user));
+  }
+
+  function updateUser(user, id) {
+    dispatch(updateUserAction(user, id));
   }
 
   const formik = useFormik({
@@ -20,15 +27,22 @@ function MyForm(props) {
       phone: user ? user.phone : "",
     },
     onSubmit: (values) => {
-      console.log(user.name);
-      postUser(
-        {
+      if (user) {
+        updateUser(
+          {
+            name: values.name,
+            surname: values.surname,
+            phone: values.phone,
+          },
+          user ? user.id : null
+        );
+      } else {
+        postUser({
           name: values.name,
           surname: values.surname,
           phone: values.phone,
-        },
-        user ? user.id : null
-      );
+        });
+      }
       props.closeModal();
     },
     validateOnChange: true,

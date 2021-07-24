@@ -7,15 +7,22 @@ export function getUsers() {
     .catch((error) => console.log("get hatası", error));
 }
 
-export function postUser(user, id) {
-  console.log("id", id);
+export function postUser(user) {
   return axios
-    .put("http://localhost:3000/users" + (id ? "/" + id : ""), user)
+    .post("http://localhost:3000/users", user)
     .then((response) => {
-      console.log(response.data);
       return response.data;
     })
     .catch((error) => console.log("post hatası", error));
+}
+
+export function updateUser(user, id) {
+  return axios
+    .put("http://localhost:3000/users" + (id ? "/" + id : ""), user)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => console.log("put hatası", error));
 }
 
 export function deleteUser(user) {
