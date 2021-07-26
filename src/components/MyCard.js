@@ -40,8 +40,6 @@ const useStyles = makeStyles({
 export default function MyCard(props) {
   const classes = useStyles();
 
-  const userInfo = ["Adı", "Soyadı", "Telefon"];
-
   const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
@@ -58,9 +56,13 @@ export default function MyCard(props) {
     setShowModal(false);
   }
 
+  function uppercaseFirstLetter(string) {
+    return string[0].toUpperCase() + string.substring(1);
+  }
+
   return (
     <Card className={classes.root}>
-      <CardContent>
+      <CardContent style={{ paddingBottom: "0px" }}>
         <Typography variant="h5" component="h2">
           Counter
         </Typography>
@@ -82,7 +84,7 @@ export default function MyCard(props) {
             <Grid container key={i}>
               <Grid item xs={3}>
                 <Typography className={classes.pos} color="textSecondary">
-                  {userInfo[i]}
+                  {uppercaseFirstLetter(key)}
                 </Typography>
               </Grid>
               <Grid item xs={3}>
