@@ -24,24 +24,16 @@ function MyForm(props) {
     initialValues: {
       name: user ? user.name : "",
       surname: user ? user.surname : "",
+      age: user ? user.age : "",
       phone: user ? user.phone : "",
+      job: user ? user.job : "",
+      salary: user ? user.salary : "",
     },
     onSubmit: (values) => {
       if (user) {
-        updateUser(
-          {
-            name: values.name,
-            surname: values.surname,
-            phone: values.phone,
-          },
-          user ? user.id : null
-        );
+        updateUser(values, user ? user.id : null);
       } else {
-        postUser({
-          name: values.name,
-          surname: values.surname,
-          phone: values.phone,
-        });
+        postUser(values);
       }
       props.closeModal();
     },
@@ -63,10 +55,26 @@ function MyForm(props) {
           /^[A-Za-züÜıİğĞÖöçÇşŞ]+$/,
           "Surname cannot contain special characters or spaces"
         ),
+      job: Yup.string()
+        .min(2, "Job must be at least 2 characters")
+        .max(20, "Job must be less then 20 characters")
+        .required("Job is required")
+        .matches(
+          /^[A-Za-züÜıİğĞÖöçÇşŞ ]+$/,
+          "Job cannot contain special characters or spaces"
+        ),
       phone: Yup.string()
         .length(11, "Phone must be 11 digit")
         .required("Phone is required")
         .matches(/^\d+$/, "Phone can contain only numbers"),
+      salary: Yup.string()
+        .min(1, "Salary must be at least 1 characters")
+        .required("Salary is required")
+        .matches(/^\d+$/, "Salary can contain only numbers"),
+      age: Yup.string()
+        .min(1, "Age must be at least 1 characters")
+        .required("Age is required")
+        .matches(/^\d+$/, "Age can contain only numbers"),
     }),
   });
 
@@ -93,10 +101,34 @@ function MyForm(props) {
           required
         />
         <MyInput
+          label="Age"
+          id="age"
+          name="age"
+          helperText={formik.errors.age}
+          type="text"
+          required
+        />
+        <MyInput
           label="Phone"
           id="phone"
           name="phone"
           helperText={formik.errors.phone}
+          type="text"
+          required
+        />
+        <MyInput
+          label="Job"
+          id="job"
+          name="job"
+          helperText={formik.errors.job}
+          type="text"
+          required
+        />
+        <MyInput
+          label="Salary"
+          id="salary"
+          name="salary"
+          helperText={formik.errors.salary}
           type="text"
           required
         />
