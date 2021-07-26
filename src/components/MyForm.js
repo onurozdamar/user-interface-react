@@ -8,6 +8,8 @@ import {
 } from "../store/actions";
 import MyInput from "./MyInput";
 
+import * as Constants from "../Constants";
+
 function MyForm(props) {
   const dispatch = useDispatch();
   const { user } = props;
@@ -40,41 +42,45 @@ function MyForm(props) {
     validateOnChange: true,
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(3, "Name must be at least 3 characters")
-        .max(20, "Name must be less then 20 characters")
-        .required("Name is required")
+        .min(3, Constants.NAME_VALIDATION_MESSAGE_MIN)
+        .max(20, Constants.NAME_VALIDATION_MESSAGE_MAX)
+        .required(Constants.VALIDATION_MESSAGE_REQUIRED)
         .matches(
-          /^[A-Za-züÜıİğĞÖöçÇşŞ]+$/,
-          "Name cannot contain special characters or spaces"
+          Constants.ONLY_LETTER_SPACE,
+          Constants.NAME_VALIDATION_MESSAGE_REGEX
         ),
       surname: Yup.string()
-        .min(2, "Surname must be at least 2 characters")
-        .max(20, "Surname must be less then 20 characters")
-        .required("Surname is required")
+        .min(2, Constants.SURNAME_VALIDATION_MESSAGE_MIN)
+        .max(20, Constants.SURNAME_VALIDATION_MESSAGE_MAX)
+        .required(Constants.VALIDATION_MESSAGE_REQUIRED)
         .matches(
-          /^[A-Za-züÜıİğĞÖöçÇşŞ]+$/,
-          "Surname cannot contain special characters or spaces"
+          Constants.ONLY_LETTER,
+          Constants.SURNAME_VALIDATION_MESSAGE_REGEX
         ),
       job: Yup.string()
-        .min(2, "Job must be at least 2 characters")
-        .max(20, "Job must be less then 20 characters")
-        .required("Job is required")
+        .min(2, Constants.JOB_VALIDATION_MESSAGE_MIN)
+        .max(20, Constants.JOB_VALIDATION_MESSAGE_MAX)
+        .required(Constants.VALIDATION_MESSAGE_REQUIRED)
         .matches(
-          /^[A-Za-züÜıİğĞÖöçÇşŞ ]+$/,
-          "Job cannot contain special characters or spaces"
+          Constants.ONLY_LETTER_SPACE,
+          Constants.JOB_VALIDATION_MESSAGE_REGEX
         ),
       phone: Yup.string()
-        .length(11, "Phone must be 11 digit")
-        .required("Phone is required")
-        .matches(/^\d+$/, "Phone can contain only numbers"),
+        .length(11, Constants.PHONE_VALIDATION_MESSAGE_LENGTH)
+        .required(Constants.VALIDATION_MESSAGE_REQUIRED)
+        .matches(
+          Constants.ONLY_DIGIT,
+          Constants.PHONE_VALIDATION_MESSAGE_REGEX
+        ),
       salary: Yup.string()
-        .min(1, "Salary must be at least 1 characters")
-        .required("Salary is required")
-        .matches(/^\d+$/, "Salary can contain only numbers"),
+        .required(Constants.VALIDATION_MESSAGE_REQUIRED)
+        .matches(
+          Constants.ONLY_DIGIT,
+          Constants.SALARY_VALIDATION_MESSAGE_REGEX
+        ),
       age: Yup.string()
-        .min(1, "Age must be at least 1 characters")
-        .required("Age is required")
-        .matches(/^\d+$/, "Age can contain only numbers"),
+        .required(Constants.VALIDATION_MESSAGE_REQUIRED)
+        .matches(Constants.ONLY_DIGIT, Constants.AGE_VALIDATION_MESSAGE_REGEX),
     }),
   });
 
