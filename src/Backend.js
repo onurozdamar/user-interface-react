@@ -2,14 +2,14 @@ import axios from "axios";
 
 export function getUsers() {
   return axios
-    .get("http://localhost:3000/users", {})
+    .get("https://localhost:5001/api/Employee/Get", {})
     .then((response) => response.data)
     .catch((error) => console.log("get hatası", error));
 }
 
 export function postUser(user) {
   return axios
-    .post("http://localhost:3000/users", user)
+    .post("https://localhost:5001/api/Employee/Add", user)
     .then((response) => {
       return response.data;
     })
@@ -18,7 +18,10 @@ export function postUser(user) {
 
 export function updateUser(user, id) {
   return axios
-    .put("http://localhost:3000/users" + (id ? "/" + id : ""), user)
+    .put(
+      "https://localhost:5001/api/Employee/Update?id=" + (id ? "/" + id : ""),
+      user
+    )
     .then((response) => {
       return response.data;
     })
@@ -27,7 +30,7 @@ export function updateUser(user, id) {
 
 export function deleteUser(user) {
   return axios
-    .delete("http://localhost:3000/users/" + user.id, user)
+    .delete("https://localhost:5001/api/Employee/Delete?id=" + user.id, user)
     .then((response) => response.data)
     .catch((error) => console.log("delete hatası", error));
 }
