@@ -1,4 +1,11 @@
-import { Button } from "@material-ui/core";
+import {
+  Button,
+  MenuItem,
+  TextField,
+  InputLabel,
+  Select,
+  FormHelperText,
+} from "@material-ui/core";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
@@ -7,7 +14,7 @@ import {
   updateUser as updateUserAction,
 } from "../store/actions";
 import MyInput from "./MyInput";
-
+import { makeStyles } from "@material-ui/core/styles";
 import * as Constants from "../Constants";
 
 function MyForm(props) {
@@ -25,10 +32,10 @@ function MyForm(props) {
   const formik = useFormik({
     initialValues: {
       name: user ? user.name : "",
-      surname: user ? user.surname : "",
-      age: user ? user.age : "",
+      email: user ? user.email : "",
       phone: user ? user.phone : "",
-      job: user ? user.job : "",
+      birthDate: user ? user.birthDate : "",
+      gender: user ? user.gender : 0,
       salary: user ? user.salary : "",
     },
     onSubmit: (values) => {
@@ -49,22 +56,10 @@ function MyForm(props) {
           Constants.ONLY_LETTER_SPACE,
           Constants.NAME_VALIDATION_MESSAGE_REGEX
         ),
-      surname: Yup.string()
-        .min(2, Constants.SURNAME_VALIDATION_MESSAGE_MIN)
-        .max(20, Constants.SURNAME_VALIDATION_MESSAGE_MAX)
+      email: Yup.string()
+        .max(20, Constants.EMAIL_VALIDATION_MESSAGE_MAX)
         .required(Constants.VALIDATION_MESSAGE_REQUIRED)
-        .matches(
-          Constants.ONLY_LETTER,
-          Constants.SURNAME_VALIDATION_MESSAGE_REGEX
-        ),
-      job: Yup.string()
-        .min(2, Constants.JOB_VALIDATION_MESSAGE_MIN)
-        .max(20, Constants.JOB_VALIDATION_MESSAGE_MAX)
-        .required(Constants.VALIDATION_MESSAGE_REQUIRED)
-        .matches(
-          Constants.ONLY_LETTER_SPACE,
-          Constants.JOB_VALIDATION_MESSAGE_REGEX
-        ),
+        .matches(Constants.EMAIL, Constants.EMAIL_VALIDATION_MESSAGE_REGEX),
       phone: Yup.string()
         .length(11, Constants.PHONE_VALIDATION_MESSAGE_LENGTH)
         .required(Constants.VALIDATION_MESSAGE_REQUIRED)
@@ -72,17 +67,33 @@ function MyForm(props) {
           Constants.ONLY_DIGIT,
           Constants.PHONE_VALIDATION_MESSAGE_REGEX
         ),
+      birthDate: Yup.string()
+        .required(Constants.VALIDATION_MESSAGE_REQUIRED)
+        .matches(
+          Constants.BIRTHDATE,
+          Constants.BIRTHDATE_VALIDATION_MESSAGE_REGEX
+        ),
+      gender: Yup.number().required(Constants.VALIDATION_MESSAGE_REQUIRED),
       salary: Yup.string()
         .required(Constants.VALIDATION_MESSAGE_REQUIRED)
         .matches(
           Constants.ONLY_DIGIT,
           Constants.SALARY_VALIDATION_MESSAGE_REGEX
         ),
-      age: Yup.string()
-        .required(Constants.VALIDATION_MESSAGE_REQUIRED)
-        .matches(Constants.ONLY_DIGIT, Constants.AGE_VALIDATION_MESSAGE_REGEX),
     }),
   });
+
+  const useStyles = makeStyles((theme) => ({
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+  }));
+
+  const classes = useStyles();
 
   return (
     <FormikProvider value={formik}>
@@ -99,18 +110,10 @@ function MyForm(props) {
           required
         />
         <MyInput
-          label="Surname"
-          id="surname"
-          name="surname"
-          helperText={formik.errors.surname}
-          type="text"
-          required
-        />
-        <MyInput
-          label="Age"
-          id="age"
-          name="age"
-          helperText={formik.errors.age}
+          label="Email"
+          id="email"
+          name="email"
+          helperText={formik.errors.email}
           type="text"
           required
         />
@@ -122,14 +125,44 @@ function MyForm(props) {
           type="text"
           required
         />
+
         <MyInput
-          label="Job"
-          id="job"
-          name="job"
-          helperText={formik.errors.job}
+          label="BirthDate"
+          id="birthDate"
+          name="birthDate"
+          helperText={formik.errors.birthDate}
           type="text"
           required
         />
+        <TextField
+          id="date"
+          label="Birthday"
+          type="date"
+          defaultValue="2017-05-24"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        {/* <MyInput
+          label="Gender"
+          id="gender"
+          name="gender"
+          helperText={formik.errors.gender}
+          type="text"
+          required
+        /> */}
+        {/* <FormControl className={classes.formControl}> */}
+        <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="gender"
+          name="gender"
+          defaultValue={0}
+        >
+          <MenuItem value={0}>Erkek</MenuItem>
+          <MenuItem value={1}>Kadın</MenuItem>
+        </Select>
+        {/* </FormControl> */}
         <MyInput
           label="Salary"
           id="salary"
