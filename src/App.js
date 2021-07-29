@@ -1,9 +1,11 @@
 import MyCard from "./components/MyCard";
+import MyTable from "./components/MyTable";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers as getUsersAction } from "./store/actions";
-import { Button } from "@material-ui/core";
+import { Button, IconButton } from "@material-ui/core";
 import MyCardModal from "./components/MyCardModal";
+import { Replay } from "@material-ui/icons";
 
 // TODO: filtre modal
 // TODO: siralama modal
@@ -24,7 +26,7 @@ const styles = {
 function App() {
   const dispatch = useDispatch();
 
-  const users = useSelector(({ cardReducer }) => cardReducer.users);
+  const employees = useSelector(({ cardReducer }) => cardReducer.users);
   const loading = useSelector(({ cardReducer }) => cardReducer.loading);
 
   function getUsers() {
@@ -46,26 +48,32 @@ function App() {
   }
 
   return (
-    <div className="App" style={{ margin: "10px" }}>
-      <div style={styles.container}>
-        <Button variant="contained" color="primary" onClick={openModal}>
-          Card Ekle
-        </Button>
-        <Button variant="contained" color="primary">
-          Sırala
-        </Button>
-        <Button variant="contained" color="primary">
-          Filtrele
-        </Button>
-      </div>
+    // <div className="App" style={{ margin: "10px" }}>
+    //   <div style={styles.container}>
+    //     <Button variant="contained" color="primary" onClick={openModal}>
+    //       Card Ekle
+    //     </Button>
+    //     <Button variant="contained" color="primary">
+    //       Sırala
+    //     </Button>
+    //     <Button variant="contained" color="primary">
+    //       Filtrele
+    //     </Button>
+    //   </div>
 
-      <div style={styles.container}>
-        {users.map((user, index) => (
-          <MyCard key={index} user={user}></MyCard>
-        ))}
-      </div>
+    //   <div style={styles.container}>
+    //     {users.map((user, index) => (
+    //       <MyCard key={index} user={user}></MyCard>
+    //     ))}
+    //   </div>
 
-      <MyCardModal showModal={showModal} closeModal={closeModal} />
+    //   <MyCardModal showModal={showModal} closeModal={closeModal} />
+    // </div>
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <IconButton style={{ alignSelf: "flex-start" }}>
+        <Replay />
+      </IconButton>
+      <MyTable employees={employees}></MyTable>
     </div>
   );
 }
