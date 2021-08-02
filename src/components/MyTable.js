@@ -9,6 +9,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { IconButton } from "@material-ui/core";
+import { Link, useHistory } from "react-router-dom";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -41,6 +42,7 @@ const useStyles = makeStyles({
 export default function CustomizedTables(props) {
   const classes = useStyles();
   const { employees } = props;
+  const history = useHistory();
 
   return (
     <TableContainer
@@ -67,11 +69,13 @@ export default function CustomizedTables(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {employees.map((employee) => (
+          {employees.map((employee, i) => (
             <StyledTableRow
-              key={employee.id}
+              key={i}
               style={{ position: "relative" }}
-              onClick={() => console.log("ayrıntılar")}
+              onClick={() =>
+                history.push({ pathname: "employeeDetail", state: employee })
+              }
             >
               <StyledTableCell>{employee.name}</StyledTableCell>
               <StyledTableCell>{employee.email}</StyledTableCell>

@@ -5,6 +5,7 @@ import { getUsers as getUsersAction } from "./store/actions";
 import { IconButton } from "@material-ui/core";
 import { Add, Replay } from "@material-ui/icons";
 import { Route, BrowserRouter, Switch, Link } from "react-router-dom";
+import MyCard from "./components/MyCard";
 import MyForm from "./components/MyForm";
 
 function App() {
@@ -24,16 +25,16 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/employee">
-          <MyForm />
-        </Route>
+        <Route path="/addEmployee" component={MyForm} />
+        <Route path="/employeeDetail" component={MyCard} />
+
         <Route path="/">
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ display: "flex", alignSelf: "flex-start" }}>
               <IconButton onClick={() => getUsers()}>
                 <Replay />
               </IconButton>
-              <Link to="/employee">
+              <Link to="/addEmployee">
                 <IconButton>
                   <Add />
                 </IconButton>

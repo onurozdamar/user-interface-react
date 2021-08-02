@@ -14,10 +14,11 @@ import {
 } from "../store/actions";
 import MyInput from "./MyInput";
 import * as Constants from "../Constants";
+import { useHistory } from "react-router-dom";
 
 function MyForm(props) {
   const dispatch = useDispatch();
-  const { user } = props;
+  const user = props?.location?.state;
 
   function postUser(user) {
     dispatch(postUserAction(user));
@@ -26,6 +27,8 @@ function MyForm(props) {
   function updateUser(user, id) {
     dispatch(updateUserAction(user, id));
   }
+
+  const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
@@ -42,7 +45,7 @@ function MyForm(props) {
       } else {
         postUser(values);
       }
-      props.closeModal();
+      history.goBack();
     },
     validateOnChange: true,
     validationSchema: Yup.object({
@@ -111,50 +114,35 @@ function MyForm(props) {
           type="text"
           required
         />
-
         <MyInput
-          label="BirthDate"
+          label="Birthday"
           id="birthDate"
           name="birthDate"
           helperText={formik.errors.birthDate}
-          type="text"
-          required
-        />
-        <TextField
-          id="date"
-          label="Birthday"
           type="date"
-          defaultValue="2017-05-24"
+          required
           InputLabelProps={{
             shrink: true,
           }}
         />
-        {/* <MyInput
+        <MyInput
           label="Gender"
           id="gender"
           name="gender"
           helperText={formik.errors.gender}
           type="text"
+          select
           required
-        /> */}
-        {/* <FormControl className={classes.formControl}> */}
-        <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="gender"
-          name="gender"
-          defaultValue={0}
         >
-          <MenuItem value={0}>Erkek</MenuItem>
-          <MenuItem value={1}>Kadın</MenuItem>
-        </Select>
-        {/* </FormControl> */}
+          <MenuItem value="0">Erkek</MenuItem>
+          <MenuItem value="1">Kadın</MenuItem>
+        </MyInput>
         <MyInput
           label="Salary"
           id="salary"
           name="salary"
           helperText={formik.errors.salary}
-          type="text"
+          type="select"
           required
         />
         <Button

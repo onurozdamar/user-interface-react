@@ -8,9 +8,9 @@ import Grid from "@material-ui/core/Grid";
 import { Icon, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Edit } from "@material-ui/icons";
-import MyCardModal from "./MyCardModal";
 import { useDispatch } from "react-redux";
 import { deleteUser as deleteUserAction } from "../store/actions";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -39,26 +39,19 @@ const useStyles = makeStyles({
 
 export default function MyCard(props) {
   const classes = useStyles();
-
-  const [showModal, setShowModal] = useState(false);
+  const user = props.location.state;
 
   const dispatch = useDispatch();
 
   function deleteUser() {
-    dispatch(deleteUserAction(props.user));
-  }
-
-  function openModal() {
-    setShowModal(true);
-  }
-
-  function closeModal() {
-    setShowModal(false);
+    dispatch(deleteUserAction(user));
   }
 
   function uppercaseFirstLetter(string) {
     return string[0].toUpperCase() + string.substring(1);
   }
+
+  const history = useHistory();
 
   return (
     <Card className={classes.root}>
@@ -78,7 +71,7 @@ export default function MyCard(props) {
           }}
         />
 
-        {Object.keys(props.user)
+        {Object.keys(user)
           .filter((e) => e !== "id")
           .map((key, i) => (
             <Grid container key={i}>
@@ -98,7 +91,7 @@ export default function MyCard(props) {
               </Grid>
               <Grid item xs={3}>
                 <Typography variant="subtitle1" component="p">
-                  {props.user[key]}
+                  {user[key]}
                 </Typography>
               </Grid>
             </Grid>
@@ -116,16 +109,10 @@ export default function MyCard(props) {
         <IconButton
           aria-label="update"
           className={classes.button}
-          onClick={openModal}
+          onClick={() => history.push({ pathname: "addEmployee", state: user })}
         >
           <Edit />
         </IconButton>
-
-        <MyCardModal
-          showModal={showModal}
-          user={props.user}
-          closeModal={closeModal}
-        />
       </CardActions>
     </Card>
   );

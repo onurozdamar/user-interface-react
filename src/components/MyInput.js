@@ -20,7 +20,9 @@ function MyInput(props) {
       error={meta.error ? true : false}
       {...props}
       {...field}
-    />
+    >
+      {props.children}
+    </TextField>
   );
 }
 
