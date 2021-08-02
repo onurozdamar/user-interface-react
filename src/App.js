@@ -1,27 +1,11 @@
-import MyCard from "./components/MyCard";
 import MyTable from "./components/MyTable";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers as getUsersAction } from "./store/actions";
-import { Button, IconButton } from "@material-ui/core";
-import MyCardModal from "./components/MyCardModal";
-import { Replay } from "@material-ui/icons";
-
-// TODO: filtre modal
-// TODO: siralama modal
-
-const styles = {
-  container: {
-    width: "75%",
-    margin: "0 auto",
-    display: "flex",
-    flexWrap: "wrap",
-    flexDirection: "row",
-    alignItems: "center",
-    marginLeft: "10px",
-    justifyContent: "space-around",
-  },
-};
+import { IconButton } from "@material-ui/core";
+import { Add, Replay } from "@material-ui/icons";
+import { Route, BrowserRouter, Switch, Link } from "react-router-dom";
+import MyForm from "./components/MyForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,46 +19,31 @@ function App() {
 
   useEffect(() => {
     getUsers();
-  }, [loading]);
-
-  const [showModal, setShowModal] = useState(false);
-
-  function openModal() {
-    setShowModal(true);
-  }
-
-  function closeModal() {
-    setShowModal(false);
-  }
+  }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    // <div className="App" style={{ margin: "10px" }}>
-    //   <div style={styles.container}>
-    //     <Button variant="contained" color="primary" onClick={openModal}>
-    //       Card Ekle
-    //     </Button>
-    //     <Button variant="contained" color="primary">
-    //       Sırala
-    //     </Button>
-    //     <Button variant="contained" color="primary">
-    //       Filtrele
-    //     </Button>
-    //   </div>
-
-    //   <div style={styles.container}>
-    //     {users.map((user, index) => (
-    //       <MyCard key={index} user={user}></MyCard>
-    //     ))}
-    //   </div>
-
-    //   <MyCardModal showModal={showModal} closeModal={closeModal} />
-    // </div>
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <IconButton style={{ alignSelf: "flex-start" }}>
-        <Replay />
-      </IconButton>
-      <MyTable employees={employees}></MyTable>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/employee">
+          <MyForm />
+        </Route>
+        <Route path="/">
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "flex", alignSelf: "flex-start" }}>
+              <IconButton onClick={() => getUsers()}>
+                <Replay />
+              </IconButton>
+              <Link to="/employee">
+                <IconButton>
+                  <Add />
+                </IconButton>
+              </Link>
+            </div>
+            <MyTable employees={employees}></MyTable>
+          </div>
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 

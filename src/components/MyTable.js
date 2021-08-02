@@ -55,16 +55,15 @@ export default function CustomizedTables(props) {
         <TableHead>
           <TableRow>
             {employees.length > 0 &&
-              Object.keys(employees[0]).map((key, index) => {
-                if (key === "id") {
-                  return;
-                }
-                return (
-                  <StyledTableCell key={index} style={{ fontSize: 16 }}>
-                    {key}
-                  </StyledTableCell>
-                );
-              })}
+              Object.keys(employees[0])
+                .filter((e) => e !== "id")
+                .map((key, index) => {
+                  return (
+                    <StyledTableCell key={index} style={{ fontSize: 16 }}>
+                      {key}
+                    </StyledTableCell>
+                  );
+                })}
           </TableRow>
         </TableHead>
         <TableBody>

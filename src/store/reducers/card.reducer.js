@@ -5,7 +5,6 @@ const initialState = {
   loading: false,
 };
 
-// post, update, delete eklenecek
 const cardReducer = function (state = initialState, action) {
   switch (action.type) {
     case Actions.GET_USERS:

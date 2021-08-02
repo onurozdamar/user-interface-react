@@ -4,7 +4,6 @@ import {
   TextField,
   InputLabel,
   Select,
-  FormHelperText,
 } from "@material-ui/core";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useDispatch } from "react-redux";
@@ -14,7 +13,6 @@ import {
   updateUser as updateUserAction,
 } from "../store/actions";
 import MyInput from "./MyInput";
-import { makeStyles } from "@material-ui/core/styles";
 import * as Constants from "../Constants";
 
 function MyForm(props) {
@@ -82,18 +80,6 @@ function MyForm(props) {
         ),
     }),
   });
-
-  const useStyles = makeStyles((theme) => ({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
-  }));
-
-  const classes = useStyles();
 
   return (
     <FormikProvider value={formik}>

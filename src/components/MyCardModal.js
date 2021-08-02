@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Modal from "react-modal";
 import MyForm from "./MyForm";
 
