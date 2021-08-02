@@ -1,10 +1,4 @@
-import {
-  Button,
-  MenuItem,
-  TextField,
-  InputLabel,
-  Select,
-} from "@material-ui/core";
+import { Button, MenuItem } from "@material-ui/core";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
@@ -134,8 +128,8 @@ function MyForm(props) {
           select
           required
         >
-          <MenuItem value="0">Erkek</MenuItem>
-          <MenuItem value="1">Kadın</MenuItem>
+          <MenuItem value={0}>Erkek</MenuItem>
+          <MenuItem value={1}>Kadın</MenuItem>
         </MyInput>
         <MyInput
           label="Salary"

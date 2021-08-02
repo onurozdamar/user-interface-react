@@ -39,6 +39,13 @@ const cardReducer = function (state = initialState, action) {
       console.log("Kullanıcı silerken hata!");
       return state;
 
+    case Actions.GET_USER_BY_ID:
+      return action.payload;
+
+    case Actions.GET_USER_BY_ID_ERROR:
+      console.log("Kullanıcı id ile çekerken hata!");
+      return state;
+
     default:
       return state;
   }

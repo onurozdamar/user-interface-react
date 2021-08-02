@@ -8,6 +8,8 @@ export const UPDATE_USER = "UPDATE_USER";
 export const UPDATE_USER_ERROR = "UPDATE_USER_ERROR";
 export const DELETE_USER = "DELETE_USER";
 export const DELETE_USER_ERROR = "DELETE_USER_ERROR";
+export const GET_USER_BY_ID = "GET_USER_BY_ID";
+export const GET_USER_BY_ID_ERROR = "GET_USER_BY_ID_ERROR";
 
 export const getUsers = () => (dispatch) => {
   Backend.getUsers()
@@ -69,6 +71,22 @@ export const deleteUser = (user) => (dispatch) => {
       dispatch({
         type: DELETE_USER_ERROR,
         payload: [],
+      })
+    );
+};
+
+export const getUserById = (id) => (dispatch) => {
+  Backend.getUserById(id)
+    .then((res) =>
+      dispatch({
+        type: GET_USER_BY_ID,
+        payload: res,
+      })
+    )
+    .catch((e) =>
+      dispatch({
+        type: GET_USER_BY_ID_ERROR,
+        payload: {},
       })
     );
 };

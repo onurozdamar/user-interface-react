@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -11,6 +11,7 @@ import { Edit } from "@material-ui/icons";
 import { useDispatch } from "react-redux";
 import { deleteUser as deleteUserAction } from "../store/actions";
 import { useHistory } from "react-router-dom";
+import { getUserById } from "../Backend";
 
 const useStyles = makeStyles({
   root: {
@@ -39,9 +40,19 @@ const useStyles = makeStyles({
 
 export default function MyCard(props) {
   const classes = useStyles();
-  const user = props.location.state;
+  const [user, setUser] = useState(props.location.state);
 
   const dispatch = useDispatch();
+
+  function getUser(id) {
+    getUserById(id).then((res) => {
+      setUser(res.data);
+    });
+  }
+
+  useEffect(() => {
+    getUser(user.id);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function deleteUser() {
     dispatch(deleteUserAction(user));

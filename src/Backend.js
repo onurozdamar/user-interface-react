@@ -34,3 +34,10 @@ export function deleteUser(user) {
     .then((response) => response.data)
     .catch((error) => console.log("delete hatası", error));
 }
+
+export function getUserById(id) {
+  return axios
+    .get("https://localhost:5001/api/Employee/GetById?id=" + id, {})
+    .then((response) => response.data)
+    .catch((error) => console.log("getbyid hatası", error));
+}
