@@ -59,8 +59,8 @@ export const updateUser = (user) => (dispatch) => {
     );
 };
 
-export const deleteUser = (user) => (dispatch) => {
-  Backend.deleteUser(user)
+export const deleteUser = (id) => (dispatch) => {
+  Backend.deleteUser(id)
     .then((res) =>
       dispatch({
         type: DELETE_USER,

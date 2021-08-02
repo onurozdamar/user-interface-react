@@ -25,9 +25,9 @@ export function updateUser(user) {
     .catch((error) => console.log("put hatası", error));
 }
 
-export function deleteUser(user) {
+export function deleteUser(id) {
   return axios
-    .delete("https://localhost:5001/api/Employee/Delete?id=" + user.id, user)
+    .delete("https://localhost:5001/api/Employee/Delete?id=" + id, {})
     .then((response) => response.data)
     .catch((error) => console.log("delete hatası", error));
 }
