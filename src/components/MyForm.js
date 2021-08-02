@@ -9,6 +9,7 @@ import {
 import MyInput from "./MyInput";
 import * as Constants from "../Constants";
 import { useHistory } from "react-router-dom";
+import moment from "moment";
 
 function MyForm(props) {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ function MyForm(props) {
       name: user ? user.name : "",
       email: user ? user.email : "",
       phone: user ? user.phone : "",
-      birthDate: user ? user.birthDate : "",
+      birthDate: user ? moment(user.birthDate).format("yyyy-MM-DD") : "",
       gender: user ? user.gender : 0,
       salary: user ? user.salary : "",
     },
@@ -62,12 +63,7 @@ function MyForm(props) {
           Constants.ONLY_DIGIT,
           Constants.PHONE_VALIDATION_MESSAGE_REGEX
         ),
-      birthDate: Yup.string()
-        .required(Constants.VALIDATION_MESSAGE_REQUIRED)
-        .matches(
-          Constants.BIRTHDATE,
-          Constants.BIRTHDATE_VALIDATION_MESSAGE_REGEX
-        ),
+      birthDate: Yup.date().required(Constants.VALIDATION_MESSAGE_REQUIRED),
       gender: Yup.number().required(Constants.VALIDATION_MESSAGE_REQUIRED),
       salary: Yup.string()
         .required(Constants.VALIDATION_MESSAGE_REQUIRED)
