@@ -13,14 +13,18 @@ import { deleteUser as deleteUserAction } from "../store/actions";
 import { useHistory } from "react-router-dom";
 import { getUserById } from "../Backend";
 import moment from "moment";
+import localization from 'moment/locale/tr'
 import MyDeleteDialog from "./MyDeleteDialog";
 
 const useStyles = makeStyles({
   root: {
-    width: 300,
-    backgroundColor: "rgb(122,221,542)",
+    width: 700,
+    background: "#536976",  /* fallback for old browsers */
+    background: "-webkit-linear-gradient(to right, #292E49 , #536976 )",  /* Chrome 10-25, Safari 5.1-6 */
+    background: "linear-gradient(to right, #292E49 , #536976 )", /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     position: "relative",
-    margin: "10px",
+    color: "rgb(250, 250, 250)",
+    margin: "10px auto",
   },
   pos: {
     marginBottom: 12,
@@ -32,7 +36,7 @@ const useStyles = makeStyles({
     gridTemplateColumns: "1fr 1fr 1fr",
   },
   button: {
-    color: "rgb(240, 10, 10)",
+    color: "rgb(255, 250, 100)",
   },
   buttonContainer: {
     display: "flex",
@@ -102,7 +106,7 @@ export default function MyCard(props) {
             .map((key, i) => (
               <Grid container key={i}>
                 <Grid item xs={3}>
-                  <Typography className={classes.pos} color="textSecondary">
+                  <Typography className={classes.pos} >
                     {uppercaseFirstLetter(key)}
                   </Typography>
                 </Grid>
@@ -118,8 +122,8 @@ export default function MyCard(props) {
                 <Grid item xs={3}>
                   <Typography variant="subtitle1" component="p">
                     {key === "birthDate"
-                      ? moment(user[key]).format("dddd MM yyyy")
-                      : user[key]}
+                      ? moment(user[key]).locale("tr",localization).format("DD MMMM yyyy")
+                      : key === "gender" ? user[key] == 0 ? "Erkek" : "Kadın" : user[key]}
                   </Typography>
                 </Grid>
               </Grid>
