@@ -12,10 +12,12 @@ import { useDispatch } from "react-redux";
 import { deleteUser as deleteUserAction } from "../store/actions";
 import { useHistory } from "react-router-dom";
 import { getUserById } from "../Backend";
+import moment from "moment";
+import MyDeleteDialog from "./MyDeleteDialog";
 
 const useStyles = makeStyles({
   root: {
-    width: 275,
+    width: 300,
     backgroundColor: "rgb(122,221,542)",
     position: "relative",
     margin: "10px",
@@ -54,9 +56,21 @@ export default function MyCard(props) {
     getUser(user.id);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  function deleteUser() {
-    dispatch(deleteUserAction(user));
+  function deleteUser(id) {
+    dispatch(deleteUserAction(id));
+    handleClose();
+    history.goBack();
   }
+
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
 
   function uppercaseFirstLetter(string) {
     return string[0].toUpperCase() + string.substring(1);
@@ -65,66 +79,77 @@ export default function MyCard(props) {
   const history = useHistory();
 
   return (
-    <Card className={classes.root}>
-      <CardContent style={{ paddingBottom: "0px" }}>
-        <Typography variant="h5" component="h2">
-          Counter
-        </Typography>
+    <>
+      <Card className={classes.root}>
+        <CardContent style={{ paddingBottom: "0px" }}>
+          <Typography variant="h5" component="h2">
+            Employee
+          </Typography>
 
-        <Icon
-          className="far fa-check-circle"
-          style={{
-            color: "green",
-            position: "absolute",
-            margin: "10px",
-            top: "0",
-            right: "0",
-          }}
-        />
+          <Icon
+            className="far fa-check-circle"
+            style={{
+              color: "green",
+              position: "absolute",
+              margin: "10px",
+              top: "0",
+              right: "0",
+            }}
+          />
 
-        {Object.keys(user)
-          .filter((e) => e !== "id")
-          .map((key, i) => (
-            <Grid container key={i}>
-              <Grid item xs={3}>
-                <Typography className={classes.pos} color="textSecondary">
-                  {uppercaseFirstLetter(key)}
-                </Typography>
+          {Object.keys(user)
+            .filter((e) => e !== "id")
+            .map((key, i) => (
+              <Grid container key={i}>
+                <Grid item xs={3}>
+                  <Typography className={classes.pos} color="textSecondary">
+                    {uppercaseFirstLetter(key)}
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography
+                    className={classes.pos}
+                    color="error"
+                    style={{ textAlign: "center" }}
+                  >
+                    :
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="subtitle1" component="p">
+                    {key === "birthDate"
+                      ? moment(user[key]).format("dddd MM yyyy")
+                      : user[key]}
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item xs={3}>
-                <Typography
-                  className={classes.pos}
-                  color="error"
-                  style={{ textAlign: "center" }}
-                >
-                  :
-                </Typography>
-              </Grid>
-              <Grid item xs={3}>
-                <Typography variant="subtitle1" component="p">
-                  {user[key]}
-                </Typography>
-              </Grid>
-            </Grid>
-          ))}
-      </CardContent>
-      <CardActions className={classes.buttonContainer}>
-        <IconButton
-          aria-label="delete"
-          className={classes.button}
-          onClick={deleteUser}
-        >
-          <DeleteIcon />
-        </IconButton>
+            ))}
+        </CardContent>
+        <CardActions className={classes.buttonContainer}>
+          <IconButton
+            aria-label="delete"
+            className={classes.button}
+            onClick={() => handleClickOpen()}
+          >
+            <DeleteIcon />
+          </IconButton>
 
-        <IconButton
-          aria-label="update"
-          className={classes.button}
-          onClick={() => history.push({ pathname: "addEmployee", state: user })}
-        >
-          <Edit />
-        </IconButton>
-      </CardActions>
-    </Card>
+          <IconButton
+            aria-label="update"
+            className={classes.button}
+            onClick={() =>
+              history.push({ pathname: "addEmployee", state: user })
+            }
+          >
+            <Edit />
+          </IconButton>
+        </CardActions>
+      </Card>
+      <MyDeleteDialog
+        openDialog={openDialog}
+        onSuccess={() => deleteUser(user.id)}
+        onFail={handleClose}
+      />
+    </>
   );
 }

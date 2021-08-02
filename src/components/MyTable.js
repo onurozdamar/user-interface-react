@@ -9,7 +9,11 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { IconButton } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
+import { deleteUser as deleteUserAction } from "../store/actions";
+import { Add } from "@material-ui/icons";
+import { useDispatch } from "react-redux";
+import MyDeleteDialog from "./MyDeleteDialog";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -26,8 +30,11 @@ const StyledTableRow = withStyles((theme) => ({
     "&:nth-of-type(odd)": {
       backgroundColor: theme.palette.action.hover,
     },
+    "&:last-child": {
+      backgroundColor: theme.palette.action.selected,
+    },
     "&:hover": {
-      backgroundColor: "red",
+      backgroundColor: theme.palette.action.disabled,
       cursor: "pointer",
     },
   },
@@ -36,6 +43,11 @@ const StyledTableRow = withStyles((theme) => ({
 const useStyles = makeStyles({
   table: {
     minWidth: 700,
+    maxWidth: 1200,
+    margin: 10,
+    marginLeft: 50,
+    alignSelf: "flex-start",
+    width: "calc(100% - 50px)",
   },
 });
 
@@ -44,51 +56,100 @@ export default function CustomizedTables(props) {
   const { employees } = props;
   const history = useHistory();
 
+  const dispatch = useDispatch();
+
+  function deleteUser(id) {
+    dispatch(deleteUserAction(id));
+    handleClose();
+  }
+
+  const [openDialog, setOpenDialog] = React.useState({
+    open: false,
+    emp: null,
+  });
+
+  const handleClickOpen = (emp) => {
+    setOpenDialog({
+      open: true,
+      emp: emp,
+    });
+  };
+
+  const handleClose = () => {
+    setOpenDialog({ ...openDialog, open: false });
+  };
+
   return (
-    <TableContainer
-      component={Paper}
-      style={{
-        margin: 10,
-        alignSelf: "flex-end",
-        width: "calc(100% - 50px)",
-      }}
-    >
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            {employees.length > 0 &&
-              Object.keys(employees[0])
-                .filter((e) => e !== "id")
-                .map((key, index) => {
-                  return (
-                    <StyledTableCell key={index} style={{ fontSize: 16 }}>
-                      {key}
-                    </StyledTableCell>
-                  );
-                })}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {employees.map((employee, i) => (
+    <>
+      <TableContainer component={Paper} className={classes.table}>
+        <Table aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              {employees.length > 0 &&
+                Object.keys(employees[0])
+                  .filter((e) => e !== "id")
+                  .map((key, index) => {
+                    return (
+                      <StyledTableCell key={index} style={{ fontSize: 16 }}>
+                        {key}
+                      </StyledTableCell>
+                    );
+                  })}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {employees.map((employee, i) => (
+              <StyledTableRow
+                key={i}
+                style={{ position: "relative" }}
+                onClick={(e) => {
+                  history.push({ pathname: "employeeDetail", state: employee });
+                }}
+              >
+                <StyledTableCell>{employee.name}</StyledTableCell>
+                <StyledTableCell>{employee.email}</StyledTableCell>
+                <StyledTableCell>
+                  {employee.phone}
+                  <IconButton
+                    id="delete"
+                    style={{
+                      zIndex: "20000",
+                      position: "absolute",
+                      top: 0,
+                      right: 0,
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleClickOpen(employee);
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
             <StyledTableRow
-              key={i}
-              style={{ position: "relative" }}
-              onClick={() =>
-                history.push({ pathname: "employeeDetail", state: employee })
-              }
+              key={0}
+              onClick={() => history.push({ pathname: "addEmployee" })}
             >
-              <StyledTableCell>{employee.name}</StyledTableCell>
-              <StyledTableCell>{employee.email}</StyledTableCell>
               <StyledTableCell>
-                {employee.phone}
-                <IconButton style={{ position: "absolute", top: 0, right: 0 }}>
-                  <DeleteIcon />
-                </IconButton>
+                <Link to="/addEmployee">
+                  <IconButton>
+                    <Add />
+                  </IconButton>
+                </Link>
               </StyledTableCell>
+              <StyledTableCell>Yeni Kayıt</StyledTableCell>
+              <StyledTableCell></StyledTableCell>
             </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <MyDeleteDialog
+        openDialog={openDialog.open}
+        onSuccess={() => deleteUser(openDialog.emp.id)}
+        onFail={handleClose}
+      />
+    </>
   );
 }

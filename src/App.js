@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers as getUsersAction } from "./store/actions";
 import { IconButton } from "@material-ui/core";
-import { Add, Replay } from "@material-ui/icons";
-import { Route, BrowserRouter, Switch, Link } from "react-router-dom";
+import { Replay } from "@material-ui/icons";
+import { Route, BrowserRouter, Switch } from "react-router-dom";
 import MyCard from "./components/MyCard";
 import MyForm from "./components/MyForm";
 
@@ -34,11 +34,6 @@ function App() {
               <IconButton onClick={() => getUsers()}>
                 <Replay />
               </IconButton>
-              <Link to="/addEmployee">
-                <IconButton>
-                  <Add />
-                </IconButton>
-              </Link>
             </div>
             <MyTable employees={employees}></MyTable>
           </div>
