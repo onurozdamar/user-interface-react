@@ -16,12 +16,9 @@ export function postUser(user) {
     .catch((error) => console.log("post hatası", error));
 }
 
-export function updateUser(user, id) {
+export function updateUser(user) {
   return axios
-    .put(
-      "https://localhost:5001/api/Employee/Update?id=" + (id ? "/" + id : ""),
-      user
-    )
+    .put("https://localhost:5001/api/Employee/Update", user)
     .then((response) => {
       return response.data;
     })

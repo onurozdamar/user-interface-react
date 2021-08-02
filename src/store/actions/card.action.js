@@ -43,8 +43,8 @@ export const postUser = (user) => (dispatch) => {
     );
 };
 
-export const updateUser = (user, id) => (dispatch) => {
-  Backend.updateUser(user, id)
+export const updateUser = (user) => (dispatch) => {
+  Backend.updateUser(user)
     .then((res) =>
       dispatch({
         type: UPDATE_USER,

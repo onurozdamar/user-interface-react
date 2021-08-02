@@ -18,8 +18,8 @@ function MyForm(props) {
     dispatch(postUserAction(user));
   }
 
-  function updateUser(user, id) {
-    dispatch(updateUserAction(user, id));
+  function updateUser(user) {
+    dispatch(updateUserAction(user));
   }
 
   const history = useHistory();
@@ -35,7 +35,7 @@ function MyForm(props) {
     },
     onSubmit: (values) => {
       if (user) {
-        updateUser(values, user ? user.id : null);
+        updateUser({ ...values, id: user.id });
       } else {
         postUser(values);
       }
