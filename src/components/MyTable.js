@@ -10,7 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { IconButton } from "@material-ui/core";
 import { useHistory, Link } from "react-router-dom";
-import { deleteUser as deleteUserAction } from "../store/actions";
+import { deleteEmployee as deleteEmployeeAction } from "../store/actions";
 import { Add } from "@material-ui/icons";
 import { useDispatch } from "react-redux";
 import MyDeleteDialog from "./MyDeleteDialog";
@@ -58,8 +58,8 @@ export default function CustomizedTables(props) {
 
   const dispatch = useDispatch();
 
-  function deleteUser(id) {
-    dispatch(deleteUserAction(id));
+  function deleteEmployee(id) {
+    dispatch(deleteEmployeeAction(id));
     handleClose();
   }
 
@@ -147,7 +147,7 @@ export default function CustomizedTables(props) {
       </TableContainer>
       <MyDeleteDialog
         openDialog={openDialog.open}
-        onSuccess={() => deleteUser(openDialog.emp.id)}
+        onSuccess={() => deleteEmployee(openDialog.emp.id)}
         onFail={handleClose}
       />
     </>

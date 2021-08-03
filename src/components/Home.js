@@ -1,7 +1,7 @@
 import MyTable from "./MyTable";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers as getUsersAction } from "../store/actions";
+import { getEmployees as getEmployeesAction } from "../store/actions";
 import { IconButton } from "@material-ui/core";
 import { Replay } from "@material-ui/icons";
 import ReactLoading from "react-loading";
@@ -9,17 +9,16 @@ import ReactLoading from "react-loading";
 function Home() {
   const dispatch = useDispatch();
 
-  const employees = useSelector(({ cardReducer }) => cardReducer.users);
+  const employees = useSelector(({ cardReducer }) => cardReducer.employees);
   const refresh = useSelector(({ cardReducer }) => cardReducer.refresh);
   const loading = useSelector(({ cardReducer }) => cardReducer.loading);
 
-  function getUsers() {
-    dispatch(getUsersAction());
+  function getEmployees() {
+    dispatch(getEmployeesAction());
   }
 
   useEffect(() => {
-    getUsers();
-    console.log("eff");
+    getEmployees();
   }, [refresh]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -47,7 +46,7 @@ function Home() {
         >
           <IconButton
             style={{ display: "flex", alignSelf: "flex-start" }}
-            onClick={() => getUsers()}
+            onClick={() => getEmployees()}
           >
             <Replay />
           </IconButton>

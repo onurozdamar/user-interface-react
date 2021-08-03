@@ -22,7 +22,7 @@ function MyCardModal(props) {
       style={customModalStyles}
       contentLabel="Example Modal"
     >
-      <MyForm user={props.user} closeModal={props.closeModal} />
+      <MyForm employee={props.employee} closeModal={props.closeModal} />
     </Modal>
   );
 }

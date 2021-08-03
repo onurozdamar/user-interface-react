@@ -3,8 +3,8 @@ import { Form, FormikProvider, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import {
-  postUser as postUserAction,
-  updateUser as updateUserAction,
+  postEmployee as postEmployeeAction,
+  updateEmployee as updateEmployeeAction,
 } from "../store/actions";
 import MyInput from "./MyInput";
 import * as Constants from "../Constants";
@@ -13,32 +13,34 @@ import moment from "moment";
 
 function MyForm(props) {
   const dispatch = useDispatch();
-  const user = props?.location?.state;
+  const employee = props?.location?.state;
 
-  function postUser(user) {
-    dispatch(postUserAction(user));
+  function postEmployee(employee) {
+    dispatch(postEmployeeAction(employee));
   }
 
-  function updateUser(user) {
-    dispatch(updateUserAction(user));
+  function updateEmployee(employee) {
+    dispatch(updateEmployeeAction(employee));
   }
 
   const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
-      name: user ? user.name : "",
-      email: user ? user.email : "",
-      phone: user ? user.phone : "",
-      birthDate: user ? moment(user.birthDate).format("yyyy-MM-DD") : "",
-      gender: user ? user.gender : 0,
-      salary: user ? user.salary : "",
+      name: employee ? employee.name : "",
+      email: employee ? employee.email : "",
+      phone: employee ? employee.phone : "",
+      birthDate: employee
+        ? moment(employee.birthDate).format("yyyy-MM-DD")
+        : "",
+      gender: employee ? employee.gender : 0,
+      salary: employee ? employee.salary : "",
     },
     onSubmit: (values) => {
-      if (user) {
-        updateUser({ ...values, id: user.id });
+      if (employee) {
+        updateEmployee({ ...values, id: employee.id });
       } else {
-        postUser(values);
+        postEmployee(values);
       }
       history.goBack();
     },

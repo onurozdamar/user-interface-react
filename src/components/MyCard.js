@@ -9,9 +9,12 @@ import { Icon, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Edit } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUser as deleteUserAction, setLoading } from "../store/actions";
+import {
+  deleteEmployee as deleteEmployeeAction,
+  setLoading,
+} from "../store/actions";
 import { useHistory } from "react-router-dom";
-import { getUserById } from "../Backend";
+import { getEmployeeById } from "../Backend";
 import moment from "moment";
 import localization from "moment/locale/tr";
 import MyDeleteDialog from "./MyDeleteDialog";
@@ -49,32 +52,31 @@ const useStyles = makeStyles({
 
 export default function MyCard(props) {
   const classes = useStyles();
-  const [user, setUser] = useState(props.location.state);
+  const [employee, setEmployee] = useState(props.location.state);
 
   const dispatch = useDispatch();
   const loading = useSelector(({ cardReducer }) => cardReducer.loading);
 
-  function getUser(id) {
+  function getEmployee(id) {
     dispatch(setLoading(true));
-    getUserById(id)
+    getEmployeeById(id)
       .then((res) => {
         dispatch(setLoading(false));
-        setUser(res.data);
+        setEmployee(res.data);
       })
       .catch((e) => {
         console.log("get by id hata", e);
         dispatch(setLoading(false));
-        setUser({});
+        setEmployee({});
       });
   }
 
   useEffect(() => {
-    getUser(user.id);
-    console.log("eff", loading);
+    getEmployee(employee.id);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  function deleteUser(id) {
-    dispatch(deleteUserAction(id));
+  function deleteEmployee(id) {
+    dispatch(deleteEmployeeAction(id));
     handleClose();
     history.goBack();
   }
@@ -129,7 +131,7 @@ export default function MyCard(props) {
                 }}
               />
 
-              {Object.keys(user)
+              {Object.keys(employee)
                 .filter((e) => e !== "id")
                 .map((key, i) => (
                   <Grid container key={i}>
@@ -150,14 +152,14 @@ export default function MyCard(props) {
                     <Grid item xs={3}>
                       <Typography variant="subtitle1" component="p">
                         {key === "birthDate"
-                          ? moment(user[key])
+                          ? moment(employee[key])
                               .locale("tr", localization)
                               .format("DD MMMM yyyy")
                           : key === "gender"
-                          ? user[key] == 0
+                          ? employee[key] == 0
                             ? "Erkek"
                             : "Kadın"
-                          : user[key]}
+                          : employee[key]}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -176,7 +178,7 @@ export default function MyCard(props) {
                 aria-label="update"
                 className={classes.button}
                 onClick={() =>
-                  history.push({ pathname: "addEmployee", state: user })
+                  history.push({ pathname: "addEmployee", state: employee })
                 }
               >
                 <Edit />
@@ -185,7 +187,7 @@ export default function MyCard(props) {
           </Card>
           <MyDeleteDialog
             openDialog={openDialog}
-            onSuccess={() => deleteUser(user.id)}
+            onSuccess={() => deleteEmployee(employee.id)}
             onFail={handleClose}
           />
         </>

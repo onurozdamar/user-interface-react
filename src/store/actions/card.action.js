@@ -1,98 +1,98 @@
 import * as Backend from "../../Backend";
 
-export const GET_USERS = "GET_USERS";
-export const GET_USERS_ERROR = "GET_USERS_ERROR";
-export const POST_USER = "POST_USER";
-export const POST_USER_ERROR = "POST_USER_ERROR";
-export const UPDATE_USER = "UPDATE_USER";
-export const UPDATE_USER_ERROR = "UPDATE_USER_ERROR";
-export const DELETE_USER = "DELETE_USER";
-export const DELETE_USER_ERROR = "DELETE_USER_ERROR";
-export const GET_USER_BY_ID = "GET_USER_BY_ID";
-export const GET_USER_BY_ID_ERROR = "GET_USER_BY_ID_ERROR";
+export const GET_EMPLOYEES = "GET_EMPLOYEES";
+export const GET_EMPLOYEES_ERROR = "GET_EMPLOYEES_ERROR";
+export const POST_EMPLOYEE = "POST_EMPLOYEE";
+export const POST_EMPLOYEE_ERROR = "POST_EMPLOYEE_ERROR";
+export const UPDATE_EMPLOYEE = "UPDATE_EMPLOYEE";
+export const UPDATE_EMPLOYEE_ERROR = "UPDATE_EMPLOYEE_ERROR";
+export const DELETE_EMPLOYEE = "DELETE_EMPLOYEE";
+export const DELETE_EMPLOYEE_ERROR = "DELETE_EMPLOYEE_ERROR";
+export const GET_EMPLOYEE_BY_ID = "GET_EMPLOYEE_BY_ID";
+export const GET_EMPLOYEE_BY_ID_ERROR = "GET_EMPLOYEE_BY_ID_ERROR";
 export const SET_LOADING = "SET_LOADING";
 
-export const getUsers = () => (dispatch) => {
+export const getEmployees = () => (dispatch) => {
   dispatch(setLoading(true));
-  Backend.getUsers()
+  Backend.getEmployees()
     .then((res) => {
       dispatch(setLoading(false));
       dispatch({
-        type: GET_USERS,
+        type: GET_EMPLOYEES,
         payload: res,
       });
     })
     .catch((e) => {
       dispatch(setLoading(false));
       dispatch({
-        type: GET_USERS_ERROR,
+        type: GET_EMPLOYEES_ERROR,
         payload: [],
       });
     });
 };
 
-export const postUser = (user) => (dispatch) => {
-  Backend.postUser(user)
+export const postEmployee = (employee) => (dispatch) => {
+  Backend.postEmployee(employee)
     .then((res) =>
       dispatch({
-        type: POST_USER,
+        type: POST_EMPLOYEE,
         payload: res,
       })
     )
     .catch((e) =>
       dispatch({
-        type: POST_USER_ERROR,
+        type: POST_EMPLOYEE_ERROR,
         payload: [],
       })
     );
 };
 
-export const updateUser = (user) => (dispatch) => {
-  Backend.updateUser(user)
+export const updateEmployee = (employee) => (dispatch) => {
+  Backend.updateEmployee(employee)
     .then((res) =>
       dispatch({
-        type: UPDATE_USER,
+        type: UPDATE_EMPLOYEE,
         payload: res,
       })
     )
     .catch((e) =>
       dispatch({
-        type: UPDATE_USER_ERROR,
+        type: UPDATE_EMPLOYEE_ERROR,
         payload: [],
       })
     );
 };
 
-export const deleteUser = (id) => (dispatch) => {
-  Backend.deleteUser(id)
+export const deleteEmployee = (id) => (dispatch) => {
+  Backend.deleteEmployee(id)
     .then((res) =>
       dispatch({
-        type: DELETE_USER,
+        type: DELETE_EMPLOYEE,
         payload: res,
       })
     )
     .catch((e) =>
       dispatch({
-        type: DELETE_USER_ERROR,
+        type: DELETE_EMPLOYEE_ERROR,
         payload: [],
       })
     );
 };
 
-export const getUserById = (id) => (dispatch) => {
+export const getEmployeeById = (id) => (dispatch) => {
   dispatch(setLoading(true));
-  Backend.getUserById(id)
+  Backend.getEmployeeById(id)
     .then((res) => {
       dispatch(setLoading(false));
       dispatch({
-        type: GET_USER_BY_ID,
+        type: GET_EMPLOYEE_BY_ID,
         payload: res,
       });
     })
     .catch((e) => {
       dispatch(setLoading(false));
       dispatch({
-        type: GET_USER_BY_ID_ERROR,
+        type: GET_EMPLOYEE_BY_ID_ERROR,
         payload: {},
       });
     });

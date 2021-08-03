@@ -1,49 +1,51 @@
 import * as Actions from "../actions";
 
 const initialState = {
-  users: [],
+  employees: [],
   loading: false,
   refresh: false,
 };
 
 const cardReducer = function (state = initialState, action) {
   switch (action.type) {
-    case Actions.GET_USERS:
-      return { ...state, users: action.payload, refresh: false };
+    case Actions.GET_EMPLOYEES:
+      return { ...state, employees: action.payload, refresh: false };
 
-    case Actions.GET_USERS_ERROR:
+    case Actions.GET_EMPLOYEES_ERROR:
       console.log("Kullanıcıları çekerken hata!");
-      return { ...state, users: action.payload };
+      return { ...state, employees: action.payload };
 
-    case Actions.POST_USER:
-      state.users.push(action.payload);
+    case Actions.POST_EMPLOYEE:
+      state.employees.push(action.payload);
       return { ...state, refresh: true };
 
-    case Actions.POST_USER_ERROR:
+    case Actions.POST_EMPLOYEE_ERROR:
       console.log("Kullanıcı eklerken hata!");
       return state;
 
-    case Actions.UPDATE_USER:
-      var user = state.users.find((user) => user.id === action.payload.id);
-      user = action.payload;
+    case Actions.UPDATE_EMPLOYEE:
+      var employee = state.employees.find(
+        (emp) => emp.id === action.payload.id
+      );
+      employee = action.payload;
       return { ...state, refresh: true };
 
-    case Actions.UPDATE_USER_ERROR:
+    case Actions.UPDATE_EMPLOYEE_ERROR:
       console.log("Kullanıcı güncellerken hata!");
       return state;
 
-    case Actions.DELETE_USER:
-      state.users.splice(state.users.indexOf(action.payload));
+    case Actions.DELETE_EMPLOYEE:
+      state.employees.splice(state.employees.indexOf(action.payload));
       return { ...state, refresh: true };
 
-    case Actions.DELETE_USER_ERROR:
+    case Actions.DELETE_EMPLOYEE_ERROR:
       console.log("Kullanıcı silerken hata!");
       return state;
 
-    case Actions.GET_USER_BY_ID:
+    case Actions.GET_EMPLOYEE_BY_ID:
       return action.payload;
 
-    case Actions.GET_USER_BY_ID_ERROR:
+    case Actions.GET_EMPLOYEE_BY_ID_ERROR:
       console.log("Kullanıcı id ile çekerken hata!");
       return state;
 
