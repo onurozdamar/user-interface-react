@@ -10,6 +10,7 @@ import MyInput from "./MyInput";
 import * as Constants from "../Constants";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
+import MyPhoneInput from "./MyPhoneInput";
 
 function MyForm(props) {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ function MyForm(props) {
     initialValues: {
       name: employee ? employee.name : "",
       email: employee ? employee.email : "",
-      phone: employee ? employee.phone : "",
+      phone: employee ? employee.phone : "+90",
       birthDate: employee
         ? moment(employee.birthDate).format("yyyy-MM-DD")
         : "",
@@ -59,7 +60,7 @@ function MyForm(props) {
         .required(Constants.VALIDATION_MESSAGE_REQUIRED)
         .matches(Constants.EMAIL, Constants.EMAIL_VALIDATION_MESSAGE_REGEX),
       phone: Yup.string()
-        .length(11, Constants.PHONE_VALIDATION_MESSAGE_LENGTH)
+        .length(13, Constants.PHONE_VALIDATION_MESSAGE_LENGTH)
         .required(Constants.VALIDATION_MESSAGE_REQUIRED)
         .matches(
           Constants.ONLY_DIGIT,
@@ -98,7 +99,7 @@ function MyForm(props) {
           type="text"
           required
         />
-        <MyInput
+        <MyPhoneInput
           label="Phone"
           id="phone"
           name="phone"

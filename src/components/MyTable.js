@@ -9,9 +9,8 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { IconButton } from "@material-ui/core";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { deleteEmployee as deleteEmployeeAction } from "../store/actions";
-import { Add } from "@material-ui/icons";
 import { useDispatch } from "react-redux";
 import MyDeleteDialog from "./MyDeleteDialog";
 
@@ -48,6 +47,7 @@ const useStyles = makeStyles({
     marginLeft: 50,
     alignSelf: "flex-start",
     width: "calc(100% - 50px)",
+    height: "100%",
   },
 });
 
@@ -79,6 +79,18 @@ export default function CustomizedTables(props) {
     setOpenDialog({ ...openDialog, open: false });
   };
 
+  function editPhone(phone) {
+    return (
+      phone.slice(0, 1) +
+      " " +
+      phone.slice(4, 7) +
+      " " +
+      phone.slice(7, 9) +
+      " " +
+      phone.slice(9, 11)
+    );
+  }
+
   return (
     <>
       <TableContainer component={Paper} className={classes.table}>
@@ -109,7 +121,7 @@ export default function CustomizedTables(props) {
                 <StyledTableCell>{employee.name}</StyledTableCell>
                 <StyledTableCell>{employee.email}</StyledTableCell>
                 <StyledTableCell>
-                  {employee.phone}
+                  {editPhone(employee.phone)}
                   <IconButton
                     id="delete"
                     style={{
@@ -128,23 +140,10 @@ export default function CustomizedTables(props) {
                 </StyledTableCell>
               </StyledTableRow>
             ))}
-            <StyledTableRow
-              key={0}
-              onClick={() => history.push({ pathname: "addEmployee" })}
-            >
-              <StyledTableCell>
-                <Link to="/addEmployee">
-                  <IconButton>
-                    <Add />
-                  </IconButton>
-                </Link>
-              </StyledTableCell>
-              <StyledTableCell>Yeni Kayıt</StyledTableCell>
-              <StyledTableCell></StyledTableCell>
-            </StyledTableRow>
           </TableBody>
         </Table>
       </TableContainer>
+
       <MyDeleteDialog
         openDialog={openDialog.open}
         onSuccess={() => deleteEmployee(openDialog.emp.id)}

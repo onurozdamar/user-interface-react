@@ -1,6 +1,6 @@
 export const ONLY_LETTER = /^[A-Za-züÜıİğĞÖöçÇşŞ]+$/;
 export const ONLY_LETTER_SPACE = /^[A-Za-züÜıİğĞÖöçÇşŞ ]+$/;
-export const ONLY_DIGIT = /^\d+$/;
+export const ONLY_DIGIT = /^[0-9 \+()]+$/;
 export const BIRTHDATE = /^\d.+$/;
 export const EMAIL =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

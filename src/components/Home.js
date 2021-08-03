@@ -3,8 +3,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getEmployees as getEmployeesAction } from "../store/actions";
 import { IconButton } from "@material-ui/core";
-import { Replay } from "@material-ui/icons";
+import { Add, Replay } from "@material-ui/icons";
 import ReactLoading from "react-loading";
+import { Link } from "react-router-dom";
 
 function Home() {
   const dispatch = useDispatch();
@@ -51,6 +52,19 @@ function Home() {
             <Replay />
           </IconButton>
           <MyTable employees={employees}></MyTable>
+          <Link
+            to="/addEmployee"
+            style={{ display: "flex", alignSelf: "flex-end", margin: 5 }}
+          >
+            <IconButton
+              style={{
+                color: "white",
+                backgroundColor: "#292E49",
+              }}
+            >
+              <Add />
+            </IconButton>
+          </Link>
         </div>
       )}
     </div>

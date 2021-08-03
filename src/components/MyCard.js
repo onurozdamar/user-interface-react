@@ -95,6 +95,18 @@ export default function MyCard(props) {
     return string[0].toUpperCase() + string.substring(1);
   }
 
+  function editPhone(phone) {
+    return (
+      phone.slice(0, 1) +
+      " " +
+      phone.slice(4, 7) +
+      " " +
+      phone.slice(7, 9) +
+      " " +
+      phone.slice(9, 11)
+    );
+  }
+
   const history = useHistory();
 
   return (
@@ -154,7 +166,9 @@ export default function MyCard(props) {
                         {key === "birthDate"
                           ? moment(employee[key])
                               .locale("tr", localization)
-                              .format("DD MMMM yyyy")
+                              .format("LL")
+                          : key === "phone"
+                          ? editPhone(employee[key])
                           : key === "gender"
                           ? employee[key] == 0
                             ? "Erkek"
