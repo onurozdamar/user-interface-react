@@ -2,7 +2,7 @@ import MyTable from "./MyTable";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getEmployees as getEmployeesAction } from "../store/actions";
-import { IconButton } from "@material-ui/core";
+import { Box, IconButton, Paper } from "@material-ui/core";
 import { Add, Replay } from "@material-ui/icons";
 import ReactLoading from "react-loading";
 import { Link } from "react-router-dom";
@@ -23,7 +23,7 @@ function Home() {
   }, [refresh]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div>
+    <Box container={<Paper elevation={3} variant="outlined" />}>
       {loading ? (
         <ReactLoading
           type="bars"
@@ -43,6 +43,8 @@ function Home() {
             display: "flex",
             flexDirection: "column",
             backgroundColor: "f3f2ef",
+            minWidth: 700,
+            maxWidth: 1200,
           }}
         >
           <IconButton
@@ -67,7 +69,7 @@ function Home() {
           </Link>
         </div>
       )}
-    </div>
+    </Box>
   );
 }
 

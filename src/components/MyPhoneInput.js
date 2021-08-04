@@ -5,12 +5,11 @@ import { useState } from "react";
 function MyPhoneInput(props) {
   const [field, meta, helperText] = useField(props);
 
-  //   helperText.setValue("+90");
-
   const useStyles = makeStyles({
     root: {
       color: "white",
-      margin: "10px",
+      flex: 1,
+      marginLeft: 5,
     },
   });
 
@@ -47,19 +46,22 @@ function MyPhoneInput(props) {
   }
 
   return (
-    <TextField
-      className={classes.root}
-      variant="outlined"
-      error={meta.error ? true : false}
-      {...props}
-      {...field}
-      value={val}
-      onChange={(e) => {
-        handleChange(e.target.value);
-        console.log(e.target.value + "/" + field.value);
-        helperText.setValue(field.value);
-      }}
-    />
+    <div style={{ display: "flex", flexDirection: "row", margin: 10 }}>
+      {props.icon}
+      <TextField
+        className={classes.root}
+        variant="outlined"
+        error={meta.error ? true : false}
+        {...props}
+        {...field}
+        value={val}
+        onChange={(e) => {
+          handleChange(e.target.value);
+          console.log(e.target.value + "/" + field.value);
+          helperText.setValue(field.value);
+        }}
+      />
+    </div>
   );
 }
 

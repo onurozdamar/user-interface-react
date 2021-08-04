@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import { Icon, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { Edit } from "@material-ui/icons";
+import { AttachMoney, Edit } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteEmployee as deleteEmployeeAction,
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
       "linear-gradient(to right, #292E49 , #536976 )" /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */,
     position: "relative",
     color: "rgb(250, 250, 250)",
-    margin: "10px auto",
+    margin: "30px auto",
   },
   pos: {
     marginBottom: 12,
@@ -91,20 +91,40 @@ export default function MyCard(props) {
     setOpenDialog(false);
   };
 
-  function uppercaseFirstLetter(string) {
-    return string[0].toUpperCase() + string.substring(1);
-  }
-
   function editPhone(phone) {
     return (
-      phone.slice(0, 1) +
+      phone.slice(0, 3) +
       " " +
-      phone.slice(4, 7) +
+      phone.slice(3, 6) +
       " " +
-      phone.slice(7, 9) +
+      phone.slice(6, 9) +
       " " +
-      phone.slice(9, 11)
+      phone.slice(9, 11) +
+      " " +
+      phone.slice(11, 13)
     );
+  }
+
+  function editSalary(salary) {
+    salary = salary + "";
+    let reverseEdited = "";
+
+    for (let index = 0; index < salary.length; index++) {
+      const element = salary[salary.length - index - 1];
+      if (index > 0 && index % 3 === 0) {
+        reverseEdited += ".";
+      }
+      reverseEdited += element;
+    }
+
+    let edited = "";
+
+    for (let index = reverseEdited.length - 1; index >= 0; index--) {
+      const element = reverseEdited[index];
+      edited += element;
+    }
+
+    return edited;
   }
 
   const history = useHistory();
@@ -131,7 +151,6 @@ export default function MyCard(props) {
               <Typography variant="h5" component="h2">
                 Employee
               </Typography>
-
               <Icon
                 className="far fa-check-circle"
                 style={{
@@ -142,42 +161,127 @@ export default function MyCard(props) {
                   right: "0",
                 }}
               />
-
-              {Object.keys(employee)
-                .filter((e) => e !== "id")
-                .map((key, i) => (
-                  <Grid container key={i}>
-                    <Grid item xs={3}>
-                      <Typography className={classes.pos}>
-                        {uppercaseFirstLetter(key)}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={3}>
-                      <Typography
-                        className={classes.pos}
-                        color="error"
-                        style={{ textAlign: "center" }}
-                      >
-                        :
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={3}>
-                      <Typography variant="subtitle1" component="p">
-                        {key === "birthDate"
-                          ? moment(employee[key])
-                              .locale("tr", localization)
-                              .format("LL")
-                          : key === "phone"
-                          ? editPhone(employee[key])
-                          : key === "gender"
-                          ? employee[key] == 0
-                            ? "Erkek"
-                            : "Kadın"
-                          : employee[key]}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                ))}
+              <Grid container style={{ margin: 10 }}>
+                <Grid item xs={3}>
+                  <Typography className={classes.pos}>Name</Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography
+                    className={classes.pos}
+                    color="error"
+                    style={{ textAlign: "center" }}
+                  >
+                    :
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="subtitle1" component="p">
+                    {employee.name}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid container style={{ margin: 10 }}>
+                <Grid item xs={3}>
+                  <Typography className={classes.pos}>Email</Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography
+                    className={classes.pos}
+                    color="error"
+                    style={{ textAlign: "center" }}
+                  >
+                    :
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="subtitle1" component="p">
+                    {employee.email}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid container style={{ margin: 10 }}>
+                <Grid item xs={3}>
+                  <Typography className={classes.pos}>Phone</Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography
+                    className={classes.phone}
+                    color="error"
+                    style={{ textAlign: "center" }}
+                  >
+                    :
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="subtitle1" component="p">
+                    {editPhone(employee.phone)}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid container style={{ margin: 10 }}>
+                <Grid item xs={3}>
+                  <Typography className={classes.pos}>Birth Date</Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography
+                    className={classes.pos}
+                    color="error"
+                    style={{ textAlign: "center" }}
+                  >
+                    :
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="subtitle1" component="p">
+                    {moment(employee.birthDate)
+                      .locale("tr", localization)
+                      .format("LL")}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid container style={{ margin: 10 }}>
+                <Grid item xs={3}>
+                  <Typography className={classes.pos}>Gender</Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography
+                    className={classes.pos}
+                    color="error"
+                    style={{ textAlign: "center" }}
+                  >
+                    :
+                  </Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant="subtitle1" component="p">
+                    {employee.gender === 0 ? "Erkek" : "Kadın"}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid container style={{ margin: 10 }}>
+                <Grid item xs={3}>
+                  <Typography className={classes.pos}>Salary</Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography
+                    className={classes.pos}
+                    color="error"
+                    style={{ textAlign: "center" }}
+                  >
+                    :
+                  </Typography>
+                </Grid>
+                <Grid item xs={3} style={{ position: "relative" }}>
+                  <Typography variant="subtitle1" component="p">
+                    {
+                      <AttachMoney
+                        style={{ position: "absolute", left: -20 }}
+                      />
+                    }
+                    {editSalary(employee.salary)}
+                  </Typography>
+                </Grid>
+              </Grid>
             </CardContent>
             <CardActions className={classes.buttonContainer}>
               <IconButton

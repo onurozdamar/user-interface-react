@@ -7,22 +7,27 @@ function MyInput(props) {
   const useStyles = makeStyles({
     root: {
       color: "white",
-      margin: "10px",
+      flex: 1,
+      marginLeft: 5,
+      textAlign: "left",
     },
   });
 
   const classes = useStyles();
 
   return (
-    <TextField
-      className={classes.root}
-      variant="outlined"
-      error={meta.error ? true : false}
-      {...props}
-      {...field}
-    >
-      {props.children}
-    </TextField>
+    <div style={{ display: "flex", flexDirection: "row", margin: 10 }}>
+      {props.icon}
+      <TextField
+        className={classes.root}
+        variant="outlined"
+        error={meta.error ? true : false}
+        {...props}
+        {...field}
+      >
+        {props.children}
+      </TextField>
+    </div>
   );
 }
 

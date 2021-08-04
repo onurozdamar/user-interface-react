@@ -41,8 +41,6 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 700,
-    maxWidth: 1200,
     margin: 10,
     marginLeft: 50,
     alignSelf: "flex-start",
@@ -81,13 +79,15 @@ export default function CustomizedTables(props) {
 
   function editPhone(phone) {
     return (
-      phone.slice(0, 1) +
+      phone.slice(0, 3) +
       " " +
-      phone.slice(4, 7) +
+      phone.slice(3, 6) +
       " " +
-      phone.slice(7, 9) +
+      phone.slice(6, 9) +
       " " +
-      phone.slice(9, 11)
+      phone.slice(9, 11) +
+      " " +
+      phone.slice(11, 13)
     );
   }
 

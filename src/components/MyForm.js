@@ -1,4 +1,4 @@
-import { Button, MenuItem } from "@material-ui/core";
+import { Button, InputAdornment, MenuItem } from "@material-ui/core";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
@@ -11,6 +11,14 @@ import * as Constants from "../Constants";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
 import MyPhoneInput from "./MyPhoneInput";
+import {
+  AssignmentInd,
+  AttachMoney,
+  Cake,
+  Email,
+  Phone,
+  Wc,
+} from "@material-ui/icons";
 
 function MyForm(props) {
   const dispatch = useDispatch();
@@ -78,76 +86,99 @@ function MyForm(props) {
   });
 
   return (
-    <FormikProvider value={formik}>
-      <Form
-        autoComplete="off"
-        style={{ display: "flex", flexDirection: "column" }}
-      >
-        <MyInput
-          label="Name"
-          id="name"
-          name="name"
-          helperText={formik.errors.name}
-          type="text"
-          required
-        />
-        <MyInput
-          label="Email"
-          id="email"
-          name="email"
-          helperText={formik.errors.email}
-          type="text"
-          required
-        />
-        <MyPhoneInput
-          label="Phone"
-          id="phone"
-          name="phone"
-          helperText={formik.errors.phone}
-          type="text"
-          required
-        />
-        <MyInput
-          label="Birthday"
-          id="birthDate"
-          name="birthDate"
-          helperText={formik.errors.birthDate}
-          type="date"
-          required
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        <MyInput
-          label="Gender"
-          id="gender"
-          name="gender"
-          helperText={formik.errors.gender}
-          type="text"
-          select
-          required
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        textAlign: "center",
+        flexDirection: "column",
+      }}
+    >
+      <h2>{employee ? "Employee Düzenle" : "Employee Ekle"}</h2>
+      <FormikProvider value={formik}>
+        <Form
+          autoComplete="off"
+          style={{ display: "flex", flexDirection: "column", margin: 20 }}
         >
-          <MenuItem value={0}>Erkek</MenuItem>
-          <MenuItem value={1}>Kadın</MenuItem>
-        </MyInput>
-        <MyInput
-          label="Salary"
-          id="salary"
-          name="salary"
-          helperText={formik.errors.salary}
-          type="select"
-          required
-        />
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={!formik.isValid || !formik.dirty}
-        >
-          Save
-        </Button>
-      </Form>
-    </FormikProvider>
+          <MyInput
+            label="Name"
+            id="name"
+            name="name"
+            helperText={formik.errors.name}
+            type="text"
+            required
+            icon={<AssignmentInd />}
+          />
+          <MyInput
+            label="Email"
+            id="email"
+            name="email"
+            helperText={formik.errors.email}
+            type="text"
+            required
+            icon={<Email />}
+          />
+          <MyPhoneInput
+            label="Phone"
+            id="phone"
+            name="phone"
+            helperText={formik.errors.phone}
+            type="text"
+            required
+            icon={<Phone />}
+          />
+          <MyInput
+            label="Birthday"
+            id="birthDate"
+            name="birthDate"
+            helperText={formik.errors.birthDate}
+            type="date"
+            required
+            InputLabelProps={{
+              shrink: true,
+            }}
+            icon={<Cake />}
+          />
+          <MyInput
+            label="Gender"
+            id="gender"
+            name="gender"
+            helperText={formik.errors.gender}
+            type="text"
+            select
+            required
+            icon={<Wc />}
+          >
+            <MenuItem value={0}>Erkek</MenuItem>
+            <MenuItem value={1}>Kadın</MenuItem>
+          </MyInput>
+          <MyInput
+            label="Salary"
+            id="salary"
+            name="salary"
+            helperText={formik.errors.salary}
+            type="select"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <AttachMoney />
+                </InputAdornment>
+              ),
+            }}
+            required
+            icon={<AttachMoney />}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={!formik.isValid || !formik.dirty}
+          >
+            {employee ? "Update" : "Save"}
+          </Button>
+        </Form>
+      </FormikProvider>
+    </div>
   );
 }
 
