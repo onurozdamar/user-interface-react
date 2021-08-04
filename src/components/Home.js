@@ -23,7 +23,7 @@ function Home() {
   }, [refresh]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div>
+    <div style={{ height: "100vh", overflow: "hidden" }}>
       {loading ? (
         <ReactLoading
           type="bars"
@@ -47,14 +47,17 @@ function Home() {
             backgroundColor: "f3f2ef",
             minWidth: 700,
             maxWidth: 1200,
+            height: "90%",
             padding: 20,
+            textAlign:"center",
             margin: "20px auto",
           }}
         >
+          <h2>Employees</h2>
           <IconButton
             style={{
               display: "flex",
-              alignSelf: "flex-start",
+              position: "absolute",
               color: "white",
               backgroundColor: "rgba(41,46,73,0.8)",
             }}

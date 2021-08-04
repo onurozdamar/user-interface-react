@@ -1,4 +1,10 @@
-import { Button, InputAdornment, MenuItem } from "@material-ui/core";
+import {
+  Button,
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  Paper,
+} from "@material-ui/core";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import * as Yup from "yup";
@@ -12,6 +18,7 @@ import { useHistory } from "react-router-dom";
 import moment from "moment";
 import MyPhoneInput from "./MyPhoneInput";
 import {
+  ArrowBack,
   AssignmentInd,
   AttachMoney,
   Cake,
@@ -88,14 +95,30 @@ function MyForm(props) {
   });
 
   return (
-    <div
+    <Paper
+      elevation={3}
+      variant="outlined"
       style={{
         display: "flex",
-        justifyContent: "center",
-        textAlign: "center",
         flexDirection: "column",
+        backgroundColor: "f3f2ef",
+        minWidth: 700,
+        maxWidth: 1200,
+        textAlign: "center",
+        padding: 20,
+        margin: "20px auto",
       }}
     >
+      <IconButton
+        style={{
+          position: "absolute",
+          color: "white",
+          backgroundColor: "rgba(41,46,73,0.8)",
+        }}
+        onClick={() => history.goBack()}
+      >
+        <ArrowBack />
+      </IconButton>
       <h2>{employee ? "Edit Employee" : "Add Employee"}</h2>
       <FormikProvider value={formik}>
         <Form
@@ -180,7 +203,7 @@ function MyForm(props) {
           </Button>
         </Form>
       </FormikProvider>
-    </div>
+    </Paper>
   );
 }
 
