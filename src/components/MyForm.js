@@ -74,7 +74,9 @@ function MyForm(props) {
           Constants.ONLY_DIGIT,
           Constants.PHONE_VALIDATION_MESSAGE_REGEX
         ),
-      birthDate: Yup.date().required(Constants.VALIDATION_MESSAGE_REQUIRED),
+      birthDate: Yup.date()
+        .max(new Date(), Constants.BIRTHDATE_VALIDATION_MESSAGE_MAX)
+        .required(Constants.VALIDATION_MESSAGE_REQUIRED),
       gender: Yup.number().required(Constants.VALIDATION_MESSAGE_REQUIRED),
       salary: Yup.string()
         .required(Constants.VALIDATION_MESSAGE_REQUIRED)
@@ -94,7 +96,7 @@ function MyForm(props) {
         flexDirection: "column",
       }}
     >
-      <h2>{employee ? "Employee Düzenle" : "Employee Ekle"}</h2>
+      <h2>{employee ? "Edit Employee" : "Add Employee"}</h2>
       <FormikProvider value={formik}>
         <Form
           autoComplete="off"

@@ -20,7 +20,7 @@ export const EMAIL_VALIDATION_MESSAGE_REGEX = "Email cannot or spaces";
 export const BIRTHDATE_VALIDATION_MESSAGE_MIN =
   "Job must be at least 2 characters";
 export const BIRTHDATE_VALIDATION_MESSAGE_MAX =
-  "Job must be less then 20 characters";
+  "Birth date must be earlier than today!";
 export const BIRTHDATE_VALIDATION_MESSAGE_REGEX =
   "Job cannot contain special characters or spaces";
 

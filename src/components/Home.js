@@ -23,7 +23,7 @@ function Home() {
   }, [refresh]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Box container={<Paper elevation={3} variant="outlined" />}>
+    <div>
       {loading ? (
         <ReactLoading
           type="bars"
@@ -38,17 +38,26 @@ function Home() {
           }}
         />
       ) : (
-        <div
+        <Paper
+          elevation={3}
+          variant="outlined"
           style={{
             display: "flex",
             flexDirection: "column",
             backgroundColor: "f3f2ef",
             minWidth: 700,
             maxWidth: 1200,
+            padding: 20,
+            margin: "20px auto",
           }}
         >
           <IconButton
-            style={{ display: "flex", alignSelf: "flex-start" }}
+            style={{
+              display: "flex",
+              alignSelf: "flex-start",
+              color: "white",
+              backgroundColor: "rgba(41,46,73,0.8)",
+            }}
             onClick={() => getEmployees()}
           >
             <Replay />
@@ -61,15 +70,15 @@ function Home() {
             <IconButton
               style={{
                 color: "white",
-                backgroundColor: "#292E49",
+                backgroundColor: "rgba(41,46,73,0.8)",
               }}
             >
               <Add />
             </IconButton>
           </Link>
-        </div>
+        </Paper>
       )}
-    </Box>
+    </div>
   );
 }
 

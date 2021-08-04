@@ -78,6 +78,9 @@ export default function CustomizedTables(props) {
   };
 
   function editPhone(phone) {
+    if (!phone) {
+      return phone;
+    }
     return (
       phone.slice(0, 3) +
       " " +
