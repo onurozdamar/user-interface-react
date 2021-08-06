@@ -11,7 +11,6 @@ function Home() {
   const dispatch = useDispatch();
 
   const employees = useSelector(({ cardReducer }) => cardReducer.employees);
-  const refresh = useSelector(({ cardReducer }) => cardReducer.refresh);
   const loading = useSelector(({ cardReducer }) => cardReducer.loading);
 
   function getEmployees() {
@@ -20,7 +19,7 @@ function Home() {
 
   useEffect(() => {
     getEmployees();
-  }, [refresh]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div style={{ height: "100vh", overflow: "hidden" }}>
@@ -49,7 +48,7 @@ function Home() {
             maxWidth: 1200,
             height: "90%",
             padding: 20,
-            textAlign:"center",
+            textAlign: "center",
             margin: "20px auto",
           }}
         >

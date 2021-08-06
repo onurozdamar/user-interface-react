@@ -65,12 +65,13 @@ export const updateEmployee = (employee) => (dispatch) => {
 
 export const deleteEmployee = (id) => (dispatch) => {
   Backend.deleteEmployee(id)
-    .then((res) =>
+    .then((res) => {
+      dispatch(getEmployees());
       dispatch({
         type: DELETE_EMPLOYEE,
         payload: res,
-      })
-    )
+      });
+    })
     .catch((e) =>
       dispatch({
         type: DELETE_EMPLOYEE_ERROR,

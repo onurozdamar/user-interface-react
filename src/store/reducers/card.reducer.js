@@ -3,14 +3,13 @@ import * as Actions from "../actions";
 const initialState = {
   employees: [],
   loading: false,
-  refresh: false,
   employee: {},
 };
 
 const cardReducer = function (state = initialState, action) {
   switch (action.type) {
     case Actions.GET_EMPLOYEES:
-      return { ...state, employees: action.payload, refresh: false };
+      return { ...state, employees: action.payload };
 
     case Actions.GET_EMPLOYEES_ERROR:
       console.log("Kullanıcıları çekerken hata!");
@@ -18,7 +17,7 @@ const cardReducer = function (state = initialState, action) {
 
     case Actions.POST_EMPLOYEE:
       state.employees.push(action.payload);
-      return { ...state, refresh: true };
+      return { ...state };
 
     case Actions.POST_EMPLOYEE_ERROR:
       console.log("Kullanıcı eklerken hata!");
@@ -29,7 +28,7 @@ const cardReducer = function (state = initialState, action) {
         (emp) => emp.id === action.payload.id
       );
       employee = action.payload;
-      return { ...state, refresh: true, employee: employee };
+      return { ...state, employee: employee };
 
     case Actions.UPDATE_EMPLOYEE_ERROR:
       console.log("Kullanıcı güncellerken hata!");
@@ -37,7 +36,7 @@ const cardReducer = function (state = initialState, action) {
 
     case Actions.DELETE_EMPLOYEE:
       state.employees.splice(state.employees.indexOf(action.payload));
-      return { ...state, refresh: true };
+      return { ...state };
 
     case Actions.DELETE_EMPLOYEE_ERROR:
       console.log("Kullanıcı silerken hata!");
