@@ -86,7 +86,7 @@ export const getEmployeeById = (id) => (dispatch) => {
       dispatch(setLoading(false));
       dispatch({
         type: GET_EMPLOYEE_BY_ID,
-        payload: res,
+        payload: res.data,
       });
     })
     .catch((e) => {
