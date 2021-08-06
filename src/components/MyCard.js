@@ -15,9 +15,9 @@ import {
 } from "../store/actions";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
-import localization from "moment/locale/tr";
 import MyDeleteDialog from "./MyDeleteDialog";
 import ReactLoading from "react-loading";
+import MyContainer from "./MyContainer";
 
 const useStyles = makeStyles({
   root: {
@@ -177,128 +177,20 @@ export default function MyCard(props) {
                   right: "0",
                 }}
               />
-              <Grid container style={{ margin: 10 }}>
-                <Grid item xs={3}>
-                  <Typography className={classes.pos}>Name</Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography
-                    className={classes.pos}
-                    color="error"
-                    style={{ textAlign: "center" }}
-                  >
-                    :
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="subtitle1" component="p">
-                    {employee.name}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid container style={{ margin: 10 }}>
-                <Grid item xs={3}>
-                  <Typography className={classes.pos}>Email</Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography
-                    className={classes.pos}
-                    color="error"
-                    style={{ textAlign: "center" }}
-                  >
-                    :
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="subtitle1" component="p">
-                    {employee.email}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid container style={{ margin: 10 }}>
-                <Grid item xs={3}>
-                  <Typography className={classes.pos}>Phone</Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography
-                    className={classes.phone}
-                    color="error"
-                    style={{ textAlign: "center" }}
-                  >
-                    :
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="subtitle1" component="p">
-                    {editPhone(employee.phone)}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid container style={{ margin: 10 }}>
-                <Grid item xs={3}>
-                  <Typography className={classes.pos}>Birth Date</Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography
-                    className={classes.pos}
-                    color="error"
-                    style={{ textAlign: "center" }}
-                  >
-                    :
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="subtitle1" component="p">
-                    {moment(employee.birthDate)
-                      .locale("tr", localization)
-                      .format("LL")}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid container style={{ margin: 10 }}>
-                <Grid item xs={3}>
-                  <Typography className={classes.pos}>Gender</Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography
-                    className={classes.pos}
-                    color="error"
-                    style={{ textAlign: "center" }}
-                  >
-                    :
-                  </Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="subtitle1" component="p">
-                    {employee.gender === 0 ? "Erkek" : "Kadın"}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid container style={{ margin: 10 }}>
-                <Grid item xs={3}>
-                  <Typography className={classes.pos}>Salary</Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography
-                    className={classes.pos}
-                    color="error"
-                    style={{ textAlign: "center" }}
-                  >
-                    :
-                  </Typography>
-                </Grid>
-                <Grid item xs={3} style={{ position: "relative" }}>
-                  <Typography variant="subtitle1" component="p">
-                    {
-                      <AttachMoney
-                        style={{ position: "absolute", left: -20 }}
-                      />
-                    }
-                    {editSalary(employee.salary)}
-                  </Typography>
-                </Grid>
-              </Grid>
+              <MyContainer name="Name" value={employee.name} />
+              <MyContainer name="Email" value={employee.email} />
+              <MyContainer name="Phone" value={editPhone(employee.phone)} />
+              <MyContainer name="Birth Date" date={employee.birthDate} />
+              <MyContainer
+                name="Gender"
+                enum={["Erkek", "Kadın"]}
+                enumIndex={employee.gender}
+              />
+              <MyContainer name="Salary" value={editSalary(employee.salary)}>
+                <AttachMoney style={{ position: "absolute", left: -20 }} />
+              </MyContainer>
             </CardContent>
+
             <CardActions className={classes.buttonContainer}>
               <IconButton
                 aria-label="delete"
