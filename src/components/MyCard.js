@@ -69,7 +69,7 @@ export default function MyCard(props) {
   function deleteEmployee(id) {
     dispatch(deleteEmployeeAction(id));
     handleClose();
-    history.goBack();
+    history.push({ pathname: "/" });
   }
 
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -157,7 +157,7 @@ export default function MyCard(props) {
               color: "white",
               backgroundColor: "rgba(41,46,73,0.8)",
             }}
-            onClick={() => history.goBack()}
+            onClick={() => history.push({ pathname: "/" })}
           >
             <ArrowBack />
           </IconButton>

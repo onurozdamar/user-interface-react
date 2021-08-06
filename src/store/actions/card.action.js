@@ -33,12 +33,13 @@ export const getEmployees = () => (dispatch) => {
 
 export const postEmployee = (employee) => (dispatch) => {
   Backend.postEmployee(employee)
-    .then((res) =>
+    .then((res) => {
+      dispatch(getEmployees());
       dispatch({
         type: POST_EMPLOYEE,
         payload: res,
-      })
-    )
+      });
+    })
     .catch((e) =>
       dispatch({
         type: POST_EMPLOYEE_ERROR,
@@ -49,12 +50,13 @@ export const postEmployee = (employee) => (dispatch) => {
 
 export const updateEmployee = (employee) => (dispatch) => {
   Backend.updateEmployee(employee)
-    .then((res) =>
+    .then((res) => {
+      dispatch(getEmployeeById(employee.id));
       dispatch({
         type: UPDATE_EMPLOYEE,
         payload: res,
-      })
-    )
+      });
+    })
     .catch((e) =>
       dispatch({
         type: UPDATE_EMPLOYEE_ERROR,

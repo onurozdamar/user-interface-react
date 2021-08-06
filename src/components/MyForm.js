@@ -58,7 +58,10 @@ function MyForm(props) {
       } else {
         postEmployee(values);
       }
-      history.goBack();
+      history.push({
+        pathname: employee ? "employeeDetail" : "/",
+        state: employee?.id,
+      });
     },
     validateOnChange: true,
     validationSchema: Yup.object({
@@ -115,7 +118,12 @@ function MyForm(props) {
           color: "white",
           backgroundColor: "rgba(41,46,73,0.8)",
         }}
-        onClick={() => history.goBack()}
+        onClick={() =>
+          history.push({
+            pathname: employee ? "employeeDetail" : "/",
+            state: employee?.id,
+          })
+        }
       >
         <ArrowBack />
       </IconButton>
