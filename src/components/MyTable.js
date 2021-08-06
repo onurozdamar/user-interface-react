@@ -118,7 +118,10 @@ export default function CustomizedTables(props) {
                 key={i}
                 style={{ position: "relative" }}
                 onClick={(e) => {
-                  history.push({ pathname: "employeeDetail", state: employee });
+                  history.push({
+                    pathname: "employeeDetail",
+                    state: employee.id,
+                  });
                 }}
               >
                 <StyledTableCell>{employee.name}</StyledTableCell>

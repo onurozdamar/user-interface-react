@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -11,10 +11,9 @@ import { AttachMoney, Edit } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteEmployee as deleteEmployeeAction,
-  setLoading,
+  getEmployeeById,
 } from "../store/actions";
 import { useHistory } from "react-router-dom";
-import { getEmployeeById } from "../Backend";
 import moment from "moment";
 import localization from "moment/locale/tr";
 import MyDeleteDialog from "./MyDeleteDialog";
@@ -52,27 +51,18 @@ const useStyles = makeStyles({
 
 export default function MyCard(props) {
   const classes = useStyles();
-  const [employee, setEmployee] = useState(props.location.state);
+  const id = props.location.state;
 
   const dispatch = useDispatch();
   const loading = useSelector(({ cardReducer }) => cardReducer.loading);
+  const employee = useSelector(({ cardReducer }) => cardReducer.employee);
 
   function getEmployee(id) {
-    dispatch(setLoading(true));
-    getEmployeeById(id)
-      .then((res) => {
-        dispatch(setLoading(false));
-        setEmployee(res.data);
-      })
-      .catch((e) => {
-        console.log("get by id hata", e);
-        dispatch(setLoading(false));
-        setEmployee({});
-      });
+    dispatch(getEmployeeById(id));
   }
 
   useEffect(() => {
-    getEmployee(employee.id);
+    getEmployee(id);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function deleteEmployee(id) {
@@ -92,6 +82,7 @@ export default function MyCard(props) {
   };
 
   function editPhone(phone) {
+    if (!phone) return;
     return (
       phone.slice(0, 3) +
       " " +

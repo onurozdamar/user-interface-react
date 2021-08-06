@@ -4,6 +4,7 @@ const initialState = {
   employees: [],
   loading: false,
   refresh: false,
+  employee: {},
 };
 
 const cardReducer = function (state = initialState, action) {
@@ -28,7 +29,7 @@ const cardReducer = function (state = initialState, action) {
         (emp) => emp.id === action.payload.id
       );
       employee = action.payload;
-      return { ...state, refresh: true };
+      return { ...state, refresh: true, employee: employee };
 
     case Actions.UPDATE_EMPLOYEE_ERROR:
       console.log("Kullanıcı güncellerken hata!");
@@ -43,7 +44,7 @@ const cardReducer = function (state = initialState, action) {
       return state;
 
     case Actions.GET_EMPLOYEE_BY_ID:
-      return action.payload;
+      return { ...state, employee: action.payload };
 
     case Actions.GET_EMPLOYEE_BY_ID_ERROR:
       console.log("Kullanıcı id ile çekerken hata!");
