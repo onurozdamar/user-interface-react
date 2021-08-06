@@ -57,7 +57,6 @@ function MyPhoneInput(props) {
         value={val}
         onChange={(e) => {
           handleChange(e.target.value);
-          console.log(e.target.value + "/" + field.value);
           helperText.setValue(field.value);
         }}
       />

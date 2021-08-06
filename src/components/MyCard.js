@@ -5,9 +5,9 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import { Icon, IconButton } from "@material-ui/core";
+import { Icon, IconButton, Paper } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { AttachMoney, Edit } from "@material-ui/icons";
+import { ArrowBack, AttachMoney, Edit } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteEmployee as deleteEmployeeAction,
@@ -30,6 +30,7 @@ const useStyles = makeStyles({
     position: "relative",
     color: "rgb(250, 250, 250)",
     margin: "30px auto",
+    textAlign: "left",
   },
   pos: {
     marginBottom: 12,
@@ -136,7 +137,31 @@ export default function MyCard(props) {
           }}
         />
       ) : (
-        <>
+        <Paper
+          elevation={3}
+          variant="outlined"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            backgroundColor: "f3f2ef",
+            minWidth: 700,
+            maxWidth: 1200,
+            textAlign: "center",
+            padding: 20,
+            margin: "20px auto",
+          }}
+        >
+          <IconButton
+            style={{
+              position: "absolute",
+              color: "white",
+              backgroundColor: "rgba(41,46,73,0.8)",
+            }}
+            onClick={() => history.goBack()}
+          >
+            <ArrowBack />
+          </IconButton>
+          <h2>Employee Detail</h2>
           <Card className={classes.root}>
             <CardContent style={{ paddingBottom: "0px" }}>
               <Typography variant="h5" component="h2">
@@ -299,7 +324,7 @@ export default function MyCard(props) {
             onSuccess={() => deleteEmployee(employee.id)}
             onFail={handleClose}
           />
-        </>
+        </Paper>
       )}
     </div>
   );
